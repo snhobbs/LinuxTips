@@ -1,0 +1,164 @@
+\documentclass[11pt, noindent, letter]{article}
+\usepackage{hyperref}
+\setlength\parindent{0pt}
+\newcommand{\ra}{$\rightarrow$ {}}
+\newcommand{\blank}{\_\_\_\_\_}
+\newcounter{questionSec}
+\newcounter{questionCount}[questionSec]
+\newcommand{\qItem}[2]{\stepcounter{questionCount} \textbf{\thequestionCount} & #1 & #2\\}
+
+\newenvironment{questions}[1]{\bgroup
+	\centering{\large\textbf{#1}}\\
+	\vspace{2pt}\hrule\vspace{12pt}
+
+	\newenvironment{questionAnswer}{
+		\begin{tabular}{|p{.05\textwidth} | p{.35\textwidth}|p{.6\textwidth}|}
+		\hline\hline
+		\stepcounter{questionSec}
+	}{\hline\end{tabular}}
+
+	\newenvironment{answerQuestion}{
+
+		\begin{tabular}{|p{.05\textwidth}| p{.5\textwidth} | p{.45\textwidth}|}
+		\hline
+		\stepcounter{questionSec}
+	}{\hline\hline\end{tabular}}
+}{\egroup}
+
+\begin{document}
+\renewcommand\baselinestretch{1.2}
+
+\section{Linux Admin}
+Links:
+
+\url{https://www.slideshare.net/kavyasri790693/linux-admin-interview-questions}
+
+\url{http://simplylinuxfaq.blogspot.in/p/linux-system-admin-interview-questions.html}
+
+\url{https://github.com/kylejohnson/linux-sysadmin-interview-questions/blob/master/test.md}
+
+\url{https://github.com/chassing/linux-sysadmin-interview-questions#hard}
+
+
+\subsection{Users, Passwords \& Permissions}
+\begin{questions}{Users}
+	\begin{questionAnswer}
+		\qItem{Adding a user}{useradd (single) \ra newusers (batch mode useradd)}
+		\qItem{Lock an Account}{usermod -l \blank}
+		\qItem{New password}{passwd "username"}
+		\qItem{Default file permissions}{Set UMASK in /etc/login.defs (debians). Takes away the permissions}
+		\qItem{Change Owner \& Group}{chown}
+		\qItem{Hashed passwords storage}{/etc/shadow}
+		\qItem{Change Permissions}{chmod Bit mask OGA rwx}
+		\qItem{Delete User}{userdel, removing recusively home folder and files \ra userdel -r}
+	\end{questionAnswer}
+\end{questions}
+
+\subsection{Sudo}
+	\begin{enumerate}
+		\item Add a user as a sudoer by using visudo. You can specify users or groups.
+		\item Common to have a sudo or wheel group and to give that group permissions in visudo
+		\item Syntax \ra user computerAddress=(Runas\_Alias) Command\_Alias
+		\item You can use a Runas\_Alias to define a semi-super user that owns a group of files or processes. Then the user can use sudo to run as that user. Same you can limit the commands that a user can run as sudo  with the Command\_Alias
+		\item to give sudo root access use 'user' ALL=(ALL) ALL \ra root privilages to "user" with use of sudo
+	\end{enumerate}
+
+\begin{questions}{Groups}
+	\begin{questionAnswer}
+		\qItem{Wheel}{Group allowing access to the sudo/su command to become another user or the superuser, for sudo this is enabled with visudo.}
+		\qItem{Add user to a group}{usermod -a -G "group" "user"(-a only used with -G, without -a, -G makes the given groups the only additional groups he is a member of)}
+		\qItem{Change users primary group}{usermod -g "group" "user"}
+		\qItem{New Group}{groupadd \blank}
+		\qItem{All groups on system}{getent group}
+	\end{questionAnswer}
+\end{questions}
+
+\subsection{General}
+\begin{questions}{Mounting}
+	\begin{questionAnswer}
+		\qItem{Mounting}{mount /dev/\blank destination}
+		\qItem{What disk are mounted}{mount}
+		\qItem{Connected disks}{lsblk prints out all of the connected devices nicely formatted}
+		\qItem{Mounting on boot}{edit /etc/fstab}
+	\end{questionAnswer}
+\end{questions}
+
+\begin{questions}{TAR \& ZIP}
+	\begin{questionAnswer}
+		\qItem{Make a tarball}{tar -cf fileout.tar filename1 filename2...}
+		\qItem{Extract a tarball}{tar -xf filename.tar (be cautious of 'tarbombs' extract in a directory)}
+		\qItem{Compress to .gz}{gzip filename}
+		\qItem{Uncompress .gz}{gzip -c filename.gz}
+		\qItem{tar \& compress}{tar -zcf fileout.tar.gz filename1 filename2...}
+		\qItem{}{}
+	\end{questionAnswer}
+\end{questions}
+
+\begin{questions}{Files}
+	\begin{questionAnswer}
+		\qItem{Types}{7 types block special, char spectial, directory, normal file, symbolic link, named pipe, socket}
+		\qItem{}{}
+		\qItem{}{}
+	\end{questionAnswer}
+\end{questions}
+
+\begin{questions}{Pipes \& Redirection}
+	\begin{questionAnswer}
+		\qItem{Pipes}{Sends the output of one file into the input of another \ra cat \blank | grep "\blank"}
+		\qItem{Redirect}{Use $>$ to overwrite a file, $>>$ to append. Use 1$>>$ for STDOUT \& 2$>>$ for STDERR}
+	\end{questionAnswer}
+\end{questions}
+
+\begin{questions}{General Bash}
+	\begin{questionAnswer}
+
+		\qItem{curl}{Tool for talking over several different protocols}
+	\end{questionAnswer}
+\end{questions}
+
+\begin{questions}{Maintenance}
+	\begin{questionAnswer}
+		\qItem{Schedule Jobs (user)}{crontab, edit using crontab -e, kept in /var/spool/cron/crontabs, also package specific cron jobs are in /etc/cron.d}
+		\qItem{Schedule Jobs (system)}{/etc/crontab}
+	\end{questionAnswer}
+\end{questions}
+
+\subsection{Strings \& Searching}
+	\begin{questions}{Bash Strings}
+		\begin{questionAnswer}
+			\qItem{cat}{Read a file}
+			\qItem{tac}{Read a file backwards}
+			\qItem{Head}{Read first few file lines}
+			\qItem{Tail}{Read last few file lines}
+			\qItem{read}{read from user input \ra read var \ra will set the var variable}
+			\qItem{cut}{Break a line on a delimiter}
+		\end{questionAnswer}
+	\end{questions}
+
+	\subsubsection{Grep}
+		\begin{enumerate}
+			\item Search for a character pattern in a string
+			\item grep \blank filename \ra returns the lines with the character pattern \blank in file filename
+			\item Follow directories "grep -r \blank ./*"
+			\item Get the line number \ra -n
+			\item Get files with the string \ra -l
+			\item Ignore case \ra -i
+		\end{enumerate}
+
+	\subsubsection{Find}
+		\begin{enumerate}
+			\item Find a specific file by name find \{Starting directory\} -name "filename"
+			\item Finding by type \ra find \{Starting directory\} -type d/f...
+			\item Searching depth \ra find \blank -maxdepth "depth"
+			\item Running a command on all found files \ra find \blank \blank -exec "command" {} + (the + ends the command)
+		\end{enumerate}
+
+\section{GIT}
+
+\section{MySQL}
+\subsection{Users \& Permissions}
+
+\section{Python}
+
+
+\end{document}

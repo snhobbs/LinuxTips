@@ -1,0 +1,6 @@
+text/*
+*.aux
+*.log
+*.pyc
+*.nav
+*.out
