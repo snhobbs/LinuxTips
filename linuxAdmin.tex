@@ -1,8 +1,11 @@
-\documentclass[11pt, noindent, letter]{article}
+\documentclass[11pt, noindent]{article}
+\usepackage[right=.5in, top=.5in, bottom=1in,left=.5in]{geometry}
 \usepackage{hyperref}
+
 \setlength\parindent{0pt}
+\setlength\textwidth{7.5in}
 \newcommand{\ra}{$\rightarrow$ {}}
-\newcommand{\blank}{\_\_\_\_\_}
+\newcommand{\blank}{\_\_\_\_{} }
 \newcounter{questionSec}
 \newcounter{questionCount}[questionSec]
 \newcommand{\qItem}[2]{\stepcounter{questionCount} \textbf{\thequestionCount} & #1 & #2\\}
@@ -12,33 +15,41 @@
 	\vspace{2pt}\hrule\vspace{12pt}
 
 	\newenvironment{questionAnswer}{
-		\begin{tabular}{|p{.05\textwidth} | p{.35\textwidth}|p{.6\textwidth}|}
+		\begin{tabular}{|r| p{.35\textwidth}|p{.55\textwidth}|}
 		\hline\hline
+		&&\\
 		\stepcounter{questionSec}
-	}{\hline\end{tabular}}
-
-	\newenvironment{answerQuestion}{
-
-		\begin{tabular}{|p{.05\textwidth}| p{.5\textwidth} | p{.45\textwidth}|}
-		\hline
-		\stepcounter{questionSec}
-	}{\hline\hline\end{tabular}}
+	}{\hline\end{tabular}\vspace{11pt}}
 }{\egroup}
 
 \begin{document}
 \renewcommand\baselinestretch{1.2}
 
 \section{Linux Admin}
-Links:
-
-\url{https://www.slideshare.net/kavyasri790693/linux-admin-interview-questions}
-
-\url{http://simplylinuxfaq.blogspot.in/p/linux-system-admin-interview-questions.html}
-
-\url{https://github.com/kylejohnson/linux-sysadmin-interview-questions/blob/master/test.md}
-
-\url{https://github.com/chassing/linux-sysadmin-interview-questions#hard}
-
+\subsection{Resources}
+	\textbf{Books}
+		\begin{enumerate}
+			\item Unix and Linux System Administration Handbook (Ordered)
+			\item The Practice of System and Network Administration
+		\end{enumerate}
+	\textbf{Communities}
+		\begin{enumerate}
+			\item Superuser \ra \url{https://superuser.com/}
+			\item Server fault \ra \url{https://serverfault.com/}
+			\item Digital Ocean \ra \url{https://www.digitalocean.com/community/tutorials}
+		\end{enumerate}
+	\textbf{Sites}
+		\begin{enumerate}
+			\item Ubuntu \ra \url{https://help.ubuntu.com/}
+			\item Tutorial Linux \ra \url{https://tutorialinux.com/}
+		\end{enumerate}
+	\textbf{Links}
+		\begin{enumerate}
+			\item \url{https://www.slideshare.net/kavyasri790693/linux-admin-interview-questions}
+			\item \url{http://simplylinuxfaq.blogspot.in/p/linux-system-admin-interview-questions.html}
+			\item \url{https://github.com/kylejohnson/linux-sysadmin-interview-questions/blob/master/test.md}
+			\item \url{https://github.com/chassing/linux-sysadmin-interview-questions#hard}
+		\end{enumerate}
 
 \subsection{Users, Passwords \& Permissions}
 \begin{questions}{Users}
@@ -70,10 +81,10 @@ Links:
 		\qItem{Change users primary group}{usermod -g "group" "user"}
 		\qItem{New Group}{groupadd \blank}
 		\qItem{All groups on system}{getent group}
+		\qItem{chgrp}{change the group ownership of a file}
 	\end{questionAnswer}
 \end{questions}
 
-\subsection{General}
 \begin{questions}{Mounting}
 	\begin{questionAnswer}
 		\qItem{Mounting}{mount /dev/\blank destination}
@@ -87,18 +98,29 @@ Links:
 	\begin{questionAnswer}
 		\qItem{Make a tarball}{tar -cf fileout.tar filename1 filename2...}
 		\qItem{Extract a tarball}{tar -xf filename.tar (be cautious of 'tarbombs' extract in a directory)}
+		\qItem{tar \& gzip}{tar -czf fileout.tar.gz filename1 filename2...}
+		\qItem{Uncompress .tar.gz}{tar -xzf filename.tar.gz}
 		\qItem{Compress to .gz}{gzip filename}
 		\qItem{Uncompress .gz}{gzip -c filename.gz}
-		\qItem{tar \& compress}{tar -zcf fileout.tar.gz filename1 filename2...}
-		\qItem{}{}
+		\qItem{Compress to .Z}{compress filename}
+		\qItem{Uncompress .Z}{uncompress filename.Z}
 	\end{questionAnswer}
 \end{questions}
 
 \begin{questions}{Files}
 	\begin{questionAnswer}
 		\qItem{Types}{7 types block special, char spectial, directory, normal file, symbolic link, named pipe, socket}
-		\qItem{}{}
-		\qItem{}{}
+		\qItem{diff}{Get difference between 2 files or dirs}
+		\qItem{comm}{select or reject common lines between files}
+		\qItem{ln}{Create a symbolic link}
+		\qItem{link}{Create a hard link}
+	\end{questionAnswer}
+\end{questions}
+
+\begin{questions}{Shell Variables}
+	\begin{questionAnswer}
+		\qItem{Set a shell variable from a program output}{\$(arg)}
+		\qItem{getconf}{List system config variables}
 	\end{questionAnswer}
 \end{questions}
 
@@ -111,7 +133,6 @@ Links:
 
 \begin{questions}{General Bash}
 	\begin{questionAnswer}
-
 		\qItem{curl}{Tool for talking over several different protocols}
 	\end{questionAnswer}
 \end{questions}
@@ -120,6 +141,8 @@ Links:
 	\begin{questionAnswer}
 		\qItem{Schedule Jobs (user)}{crontab, edit using crontab -e, kept in /var/spool/cron/crontabs, also package specific cron jobs are in /etc/cron.d}
 		\qItem{Schedule Jobs (system)}{/etc/crontab}
+		\qItem{at}{Run a process at a specified time, accepts HH:MM}
+		\qItem{batch}{Run a process when the load drops to a specified level}
 	\end{questionAnswer}
 \end{questions}
 
@@ -128,6 +151,7 @@ Links:
 		\begin{questionAnswer}
 			\qItem{cat}{Read a file}
 			\qItem{tac}{Read a file backwards}
+			\qItem{nl}{Number lines in output}
 			\qItem{Head}{Read first few file lines}
 			\qItem{Tail}{Read last few file lines}
 			\qItem{read}{read from user input \ra read var \ra will set the var variable}
@@ -151,10 +175,36 @@ Links:
 			\item Finding by type \ra find \{Starting directory\} -type d/f...
 			\item Searching depth \ra find \blank -maxdepth "depth"
 			\item Running a command on all found files \ra find \blank \blank -exec "command" {} + (the + ends the command)
-			\item Files by last accessed time \ra -atime "days_ago" or -amin "min_ago". a \ra accessed, m \ra modified, c \ra changed.
+			\item Files by last accessed time \ra -atime "days\_ago" or -amin "min\_ago".
+			\begin{enumerate}
+				\item a \ra accessed, m \ra modified, c \ra changed
+				\item use -daystart to count from the start of the current day instead of right now
+				\item use + for greater than the time, - for less and none for exactly
+			\end{enumerate}
 		\end{enumerate}
 
+	\begin{questions}{file}
+		\begin{questionAnswer}
+			\qItem{Find the file's character set}{file -i \ra gives the mime type, search for}
+			\qItem{tac}{Read a file backwards}
+			\qItem{Head}{Read first few file lines}
+			\qItem{Tail}{Read last few file lines}
+			\qItem{read}{read from user input \ra read var \ra will set the var variable}
+			\qItem{cut -d : -f "field1"-"field2"}{Break a line on a delim ':', then take the fields in range, c of chars, b bytes}
+		\end{questionAnswer}
+	\end{questions}
+
+
 \section{GIT}
+	\begin{questions}{Setup}
+		\begin{questionAnswer}
+			\qItem{Get a repo}{git clone}
+			\qItem{Make a repo}{git init}
+			\qItem{Pull an existing repo}{Use init or clone the repo then pull}
+			\qItem{Remote repos}{git remote \ra lists the remote repos, git remote add "name" "url"}
+			\qItem{Configuration}{git config \ra complicated, but add email and user with git config --global user.email \& user.name}
+		\end{questionAnswer}
+	\end{questions}
 
 \section{MySQL}
 \subsection{Users \& Permissions}
@@ -162,4 +212,28 @@ Links:
 \section{Python}
 
 
+\section{Networking}
+	\textbf{Links: }\url{https://github.com/kylejohnson/linux-sysadmin-interview-questions/blob/master/test.md}
+
+\section{Terms}
+\begin{questions}{Programming}
+	\begin{questionAnswer}
+		\qItem{Agile}{See below \ref{sect:agile}}
+	\end{questionAnswer}
+	\begin{enumerate}
+		\label{sect:agile}
+		\item \textbf{Agile: } Software development strategy. Values:
+			\begin{enumerate}
+				\item \textbf{Individuals and Interactions} over processes and tools
+					\begin{enumerate}
+						\item Pair programming \ra 1 station 2 programmers, driver \& navigator/observer
+						\item Colocation \ra Team members in the same area
+					\end{enumerate}
+				\item \textbf{Working Software} over comprehensive documentation
+				\item \textbf{Customer Collaboration} over contract negotiation
+				\item \textbf{Responding to Change} over following a plan
+
+			\end{enumerate}
+	\end{enumerate}
+\end{questions}
 \end{document}
