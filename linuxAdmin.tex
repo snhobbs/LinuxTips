@@ -1,32 +1,8 @@
-\documentclass[11pt, noindent]{article}
-\usepackage[right=.5in, top=.5in, bottom=1in,left=.5in]{geometry}
-\usepackage{hyperref}
-
-\setlength\parindent{0pt}
-\setlength\textwidth{7.5in}
-\newcommand{\ra}{$\rightarrow$ {}}
-\newcommand{\blank}{\_\_\_\_{} }
-\newcounter{questionSec}
-\newcounter{questionCount}[questionSec]
-\newcommand{\qItem}[2]{\stepcounter{questionCount} \textbf{\thequestionCount} & #1 & #2\\}
-
-\newenvironment{questions}[1]{\bgroup
-	\centering{\large\textbf{#1}}\\
-	\vspace{2pt}\hrule\vspace{12pt}
-
-	\newenvironment{questionAnswer}{
-		\begin{tabular}{|r| p{.35\textwidth}|p{.55\textwidth}|}
-		\hline\hline
-		&&\\
-		\stepcounter{questionSec}
-	}{\hline\end{tabular}\vspace{11pt}}
-}{\egroup}
-
+\documentclass{notes}
 \begin{document}
-\renewcommand\baselinestretch{1.2}
-
-\section{Linux Admin}
-\subsection{Resources}
+\tableofcontents
+\chapter{Linux}
+\section{Resources}
 	\textbf{Books}
 		\begin{enumerate}
 			\item Unix and Linux System Administration Handbook (Ordered)
@@ -51,7 +27,7 @@
 			\item \url{https://github.com/chassing/linux-sysadmin-interview-questions#hard}
 		\end{enumerate}
 
-\subsection{Users, Passwords \& Permissions}
+\section{Users, Passwords \& Permissions}
 \begin{questions}{Users}
 	\begin{questionAnswer}
 		\qItem{Adding a user}{useradd (single) \ra newusers (batch mode useradd)}
@@ -65,15 +41,6 @@
 	\end{questionAnswer}
 \end{questions}
 
-\subsection{Sudo}
-	\begin{enumerate}
-		\item Add a user as a sudoer by using visudo. You can specify users or groups.
-		\item Common to have a sudo or wheel group and to give that group permissions in visudo
-		\item Syntax \ra user computerAddress=(Runas\_Alias) Command\_Alias
-		\item You can use a Runas\_Alias to define a semi-super user that owns a group of files or processes. Then the user can use sudo to run as that user. Same you can limit the commands that a user can run as sudo  with the Command\_Alias
-		\item to give sudo root access use 'user' ALL=(ALL) ALL \ra root privilages to "user" with use of sudo
-	\end{enumerate}
-
 \begin{questions}{Groups}
 	\begin{questionAnswer}
 		\qItem{Wheel}{Group allowing access to the sudo/su command to become another user or the superuser, for sudo this is enabled with visudo.}
@@ -85,38 +52,62 @@
 	\end{questionAnswer}
 \end{questions}
 
-\begin{questions}{Mounting}
-	\begin{questionAnswer}
-		\qItem{Mounting}{mount /dev/\blank destination}
-		\qItem{What disk are mounted}{mount}
-		\qItem{Connected disks}{lsblk prints out all of the connected devices nicely formatted}
-		\qItem{Mounting on boot}{edit /etc/fstab}
-	\end{questionAnswer}
-\end{questions}
+\subsection{Sudo}
+	\begin{enumerate}
+		\item Add a user as a sudoer by using visudo. You can specify users or groups.
+		\item Common to have a sudo or wheel group and to give that group permissions in visudo
+		\item Syntax \ra user computerAddress=(Runas\_Alias) Command\_Alias
+		\item You can use a Runas\_Alias to define a semi-super user that owns a group of files or processes. Then the user can use sudo to run as that user. Same you can limit the commands that a user can run as sudo  with the Command\_Alias
+		\item to give sudo root access use 'user' ALL=(ALL) ALL \ra root privilages to "user" with use of sudo
+	\end{enumerate}
 
-\begin{questions}{TAR \& ZIP}
-	\begin{questionAnswer}
-		\qItem{Make a tarball}{tar -cf fileout.tar filename1 filename2...}
-		\qItem{Extract a tarball}{tar -xf filename.tar (be cautious of 'tarbombs' extract in a directory)}
-		\qItem{tar \& gzip}{tar -czf fileout.tar.gz filename1 filename2...}
-		\qItem{Uncompress .tar.gz}{tar -xzf filename.tar.gz}
-		\qItem{Compress to .gz}{gzip filename}
-		\qItem{Uncompress .gz}{gzip -c filename.gz}
-		\qItem{Compress to .Z}{compress filename}
-		\qItem{Uncompress .Z}{uncompress filename.Z}
-	\end{questionAnswer}
-\end{questions}
+\section{Processes}
+	\begin{questions}{Process Info}
+		\begin{questionAnswer}
+			\qItem{PID}{Process ID \ra PID 1 is init, spawns all other ids}
+			\qItem{proc}{In /proc \ra State of running processes in a virtual file system}
+			\qItem{Process types}{user \ra started w/out special permissions, daemon \ra exist in background, kernel \ra execute only in 'kernel space'}
+			\qItem{Forked}{process being started by a parent process}
+			\qItem{Nice}{Priority level [-20 (most) - 19 (least)] \ra 0 is default. Call with: nice "val" "process", reset the priority level with renice "new val" "PID"}
+			\qItem{Process Monitering}{Top, ps aux, htop \ra good tool}
+		\end{questionAnswer}
 
-\begin{questions}{Files}
-	\begin{questionAnswer}
-		\qItem{Types}{7 types block special, char spectial, directory, normal file, symbolic link, named pipe, socket}
-		\qItem{diff}{Get difference between 2 files or dirs}
-		\qItem{comm}{select or reject common lines between files}
-		\qItem{ln}{Create a symbolic link}
-		\qItem{link}{Create a hard link}
-	\end{questionAnswer}
-\end{questions}
+			\subsubsection{Process states}
+				\rsrc{RHEL Doc} \url{https://access.redhat.com/sites/default/files/attachments/processstates_20120831.pdf}
+				\begin{enumerate}
+					\item Runnable
+						\begin{enumerate}
+							\item Born or forked
+							\item Ready to run or runnable
+						\end{enumerate}
+					\item Running
+						\begin{enumerate}
+							\item Running in user space or running in kernel space
+						\end{enumerate}
+					\item Sleeping
+						\begin{enumerate}
+							\item Blocked, Waiting, Sleeping, in an Interruptable sleep, or in an Uninterruptable sleep
+							\item The process is sleeping, but it is present in main memory
+							\item The process is sleeping, but it is present in secondary memory storage (swap space on disk)
+						\end{enumerate}
+					\item Zombie
+						\begin{enumerate}
+							\item Terminated or stopped (gone immediately)
+							\item \textbf{zombie} state if terminated and parent process has not released it yet
+						\end{enumerate}
+				\end{enumerate}
+	\end{questions}
 
+	\begin{questions}{Process Signals}
+		\begin{questionAnswer}
+			\qItem{Send commands}{kill PID \ra kills the process}
+			\qItem{pgrep}{Use user or type to find the PID of processes}
+			\qItem{pkill}{same as pgrep but it stops the matching PID}
+			\qItem{kill}{Send a signal to a process with kill -s "val" (default is 15) \ra see man(7) signals for the signals}
+		\end{questionAnswer}
+	\end{questions}
+
+\section{Bash Scripting}
 \begin{questions}{Shell Variables}
 	\begin{questionAnswer}
 		\qItem{Set a shell variable from a program output}{\$(arg)}
@@ -131,13 +122,15 @@
 	\end{questionAnswer}
 \end{questions}
 
-\begin{questions}{General Bash}
+\begin{questions}{General Tools}
 	\begin{questionAnswer}
 		\qItem{curl}{Tool for talking over several different protocols}
+		\qItem{wget}{Downloads files from an address, same as curl but GNU}
 	\end{questionAnswer}
 \end{questions}
 
-\begin{questions}{Maintenance}
+\section{Maintenance}
+\begin{questions}{Running Jobs}
 	\begin{questionAnswer}
 		\qItem{Schedule Jobs (user)}{crontab, edit using crontab -e, kept in /var/spool/cron/crontabs, also package specific cron jobs are in /etc/cron.d}
 		\qItem{Schedule Jobs (system)}{/etc/crontab}
@@ -146,20 +139,14 @@
 	\end{questionAnswer}
 \end{questions}
 
-\subsection{Strings \& Searching}
-	\begin{questions}{Bash Strings}
-		\begin{questionAnswer}
-			\qItem{cat}{Read a file}
-			\qItem{tac}{Read a file backwards}
-			\qItem{nl}{Number lines in output}
-			\qItem{Head}{Read first few file lines}
-			\qItem{Tail}{Read last few file lines}
-			\qItem{read}{read from user input \ra read var \ra will set the var variable}
-			\qItem{cut}{Break a line on a delimiter}
-		\end{questionAnswer}
-	\end{questions}
+\begin{questions}{Backups}
+	\begin{questionAnswer}
+		\qItem{}{}
+	\end{questionAnswer}
+\end{questions}
 
-	\subsubsection{Grep}
+\section{Strings \& Searching}
+	\subsection{Grep}
 		\begin{enumerate}
 			\item Search for a character pattern in a string
 			\item grep \blank filename \ra returns the lines with the character pattern \blank in file filename
@@ -169,7 +156,35 @@
 			\item Ignore case \ra -i
 		\end{enumerate}
 
-	\subsubsection{Find}
+	\begin{questions}{Strings}
+		\begin{questionAnswer}
+			\qItem{cut -d : -f "field1"-"field2"}{Break a line on a delim ':', then take the fields in range, c of chars, b bytes}
+		\end{questionAnswer}
+	\end{questions}
+
+\section{Files}
+	\begin{questions}{Files}
+		\begin{questionAnswer}
+			\qItem{Types}{7 types block special, char spectial, directory, normal file, symbolic link, named pipe, socket}
+			\qItem{diff}{Get difference between 2 files or dirs}
+			\qItem{comm}{select or reject common lines between files}
+			\qItem{ln}{Create a symbolic link}
+			\qItem{link}{Create a hard link}
+			\qItem{Find the file's character set}{file -i \ra gives the mime type, search for}
+		\end{questionAnswer}
+	\end{questions}
+
+	\begin{questions}{File Tools}
+		\begin{questionAnswer}
+			\qItem{cat}{Read a file}
+			\qItem{tac}{Read a file backwards}
+			\qItem{Head}{Read first few file lines}
+			\qItem{Tail}{Read last few file lines}
+			\qItem{read}{read from user input \ra read var \ra will set the var variable}
+		\end{questionAnswer}
+	\end{questions}
+
+	\subsection{Find}
 		\begin{enumerate}
 			\item Find a specific file by name find \{Starting directory\} -name "filename"
 			\item Finding by type \ra find \{Starting directory\} -type d/f...
@@ -183,57 +198,59 @@
 			\end{enumerate}
 		\end{enumerate}
 
-	\begin{questions}{file}
-		\begin{questionAnswer}
-			\qItem{Find the file's character set}{file -i \ra gives the mime type, search for}
-			\qItem{tac}{Read a file backwards}
-			\qItem{Head}{Read first few file lines}
-			\qItem{Tail}{Read last few file lines}
-			\qItem{read}{read from user input \ra read var \ra will set the var variable}
-			\qItem{cut -d : -f "field1"-"field2"}{Break a line on a delim ':', then take the fields in range, c of chars, b bytes}
-		\end{questionAnswer}
-	\end{questions}
-
-
-\section{GIT}
-	\begin{questions}{Setup}
-		\begin{questionAnswer}
-			\qItem{Get a repo}{git clone}
-			\qItem{Make a repo}{git init}
-			\qItem{Pull an existing repo}{Use init or clone the repo then pull}
-			\qItem{Remote repos}{git remote \ra lists the remote repos, git remote add "name" "url"}
-			\qItem{Configuration}{git config \ra complicated, but add email and user with git config --global user.email \& user.name}
-		\end{questionAnswer}
-	\end{questions}
-
-\section{MySQL}
-\subsection{Users \& Permissions}
-
-\section{Python}
-
-
-\section{Networking}
-	\textbf{Links: }\url{https://github.com/kylejohnson/linux-sysadmin-interview-questions/blob/master/test.md}
-
-\section{Terms}
-\begin{questions}{Programming}
+\begin{questions}{Finding Stuff}
 	\begin{questionAnswer}
-		\qItem{Agile}{See below \ref{sect:agile}}
+			\qItem{Locate (mlocate in suse)}{Use updatedb to prepare a database with file locations, then that can be used instead of the slower find}
+			\qItem{which}{Shows the full path of (shell) commands (or aliases)}
+			\qItem{whereis}{Searches for commands installed and where it is \ra only for programs no aliases}
 	\end{questionAnswer}
-	\begin{enumerate}
-		\label{sect:agile}
-		\item \textbf{Agile: } Software development strategy. Values:
-			\begin{enumerate}
-				\item \textbf{Individuals and Interactions} over processes and tools
-					\begin{enumerate}
-						\item Pair programming \ra 1 station 2 programmers, driver \& navigator/observer
-						\item Colocation \ra Team members in the same area
-					\end{enumerate}
-				\item \textbf{Working Software} over comprehensive documentation
-				\item \textbf{Customer Collaboration} over contract negotiation
-				\item \textbf{Responding to Change} over following a plan
-
-			\end{enumerate}
-	\end{enumerate}
 \end{questions}
+
+\begin{questions}{TAR \& ZIP}
+	\begin{questionAnswer}
+		\qItem{Make a tarball}{tar -cpf fileout.tar filename1 filename2..., add p to mantain permissions}
+		\qItem{Extract a tarball}{tar -xpf filename.tar (be cautious of 'tarbombs' extract in a directory)}
+		\qItem{tar \& gzip}{tar -czpf fileout.tar.gz filename1 filename2...}
+		\qItem{Uncompress .tar.gz}{tar -xzpf filename.tar.gz}
+		\qItem{Compress to .gz}{gzip filename}
+		\qItem{Uncompress .gz}{gzip -c filename.gz}
+		\qItem{Compress to .Z}{compress filename}
+		\qItem{Uncompress .Z}{uncompress filename.Z}
+	\end{questionAnswer}
+\end{questions}
+
+\section{File System}
+	\begin{questions}{Hierarchy (FHS-V2.3)}
+		\rsrc{Docs}\url{http://www.pathname.com/fhs/pub/fhs-2.3.pdf}\\
+		\begin{questionAnswer}
+			\qItem{bin}{Essential command binaries}
+			\qItem{boot}{Static files of the boot loader \ra unbootable w/out}
+			\qItem{dev}{Device files}
+			\qItem{etc}{Host-specific system configuration \ra must be static, cannot be a binary}
+			\qItem{lib}{Essential shared libraries and kernel modules \ra }
+			\qItem{media}{Mount point for removeable media \ra use lsblk to get the names of these}
+			\qItem{mnt}{Mount point for mounting a filesystem temporarily}
+			\qItem{opt}{Add-on application software packages}
+			\qItem{sbin}{Essential system binaries}
+			\qItem{srv}{Data for services provided by this system}
+			\qItem{tmp}{Temporary files}
+			\qItem{usr}{Secondary hierarchy}
+			\qItem{var}{Variable data}
+			\qItem{home (optional)}{User home dirs}
+			\qItem{lib$<$qual$>$ (normally lib64 or lib32, optional)}{If multiple library versions are needed like 32 \& 64 bit}
+			\qItem{root (optional)}{Home dir for root user}
+		\end{questionAnswer}
+	\end{questions}
+
+	\begin{questions}{Mounting}
+		\begin{questionAnswer}
+			\qItem{Mounting}{mount /dev/\blank destination}
+			\qItem{What disk are mounted}{mount}
+			\qItem{Connected disks}{lsblk prints out all of the connected devices nicely formatted}
+			\qItem{Mounting on boot}{edit /etc/fstab}
+		\end{questionAnswer}
+	\end{questions}
+
+\input{networking}
+\input{programming}
 \end{document}

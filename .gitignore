@@ -5,3 +5,4 @@ text/*
 *.nav
 *.out
 resources/*
+*.toc
