@@ -31,8 +31,8 @@
 \begin{questions}{Users}
 	\begin{questionAnswer}
 		\qItem{Adding a user}{useradd (single) \ra newusers (batch mode useradd)}
-		\qItem{Lock an Account}{usermod -l \blank}
-		\qItem{New password}{passwd "username"}
+		\qItem{Lock an Account}{usermod -l \opt{user}}
+		\qItem{New password}{passwd \opt{username}}
 		\qItem{Default file permissions}{Set UMASK in /etc/login.defs (debians). Takes away the permissions}
 		\qItem{Change Owner \& Group}{chown}
 		\qItem{Hashed passwords storage}{/etc/shadow}
@@ -44,22 +44,23 @@
 \begin{questions}{Groups}
 	\begin{questionAnswer}
 		\qItem{Wheel}{Group allowing access to the sudo/su command to become another user or the superuser, for sudo this is enabled with visudo.}
-		\qItem{Add user to a group}{usermod -a -G "group" "user"(-a only used with -G, without -a, -G makes the given groups the only additional groups he is a member of)}
-		\qItem{Change users primary group}{usermod -g "group" "user"}
-		\qItem{New Group}{groupadd \blank}
+		\qItem{Add user to a group}{usermod -a -G \opt{group} \opt{user} (-a only used with -G, without -a, -G makes the given groups the only additional groups he is a member of)}
+		\qItem{Change users primary group}{usermod -g \opt{group} \opt{user}}
+		\qItem{New Group}{groupadd \opt{group}}
 		\qItem{All groups on system}{getent group}
 		\qItem{chgrp}{change the group ownership of a file}
 	\end{questionAnswer}
 \end{questions}
 
-\subsection{Sudo}
+\begin{questions}{Sudo}
 	\begin{enumerate}
 		\item Add a user as a sudoer by using visudo. You can specify users or groups.
 		\item Common to have a sudo or wheel group and to give that group permissions in visudo
-		\item Syntax \ra user computerAddress=(Runas\_Alias) Command\_Alias
+		\item Syntax \ra \opt{user} computerAddress=(\opt{Runas\_Alias}) \opt{Command\_Alias}
 		\item You can use a Runas\_Alias to define a semi-super user that owns a group of files or processes. Then the user can use sudo to run as that user. Same you can limit the commands that a user can run as sudo  with the Command\_Alias
-		\item to give sudo root access use 'user' ALL=(ALL) ALL \ra root privilages to "user" with use of sudo
+		\item to give sudo root access use: \opt{user} ALL=(ALL) ALL \ra root privilages to \opt{user} with use of sudo
 	\end{enumerate}
+\end{questions}
 
 \section{Processes}
 	\begin{questions}{Process Info}
@@ -68,7 +69,7 @@
 			\qItem{proc}{In /proc \ra State of running processes in a virtual file system}
 			\qItem{Process types}{user \ra started w/out special permissions, daemon \ra exist in background, kernel \ra execute only in 'kernel space'}
 			\qItem{Forked}{process being started by a parent process}
-			\qItem{Nice}{Priority level [-20 (most) - 19 (least)] \ra 0 is default. Call with: nice "val" "process", reset the priority level with renice "new val" "PID"}
+			\qItem{Nice}{Priority level [-20 (most) - 19 (least)] \ra 0 is default. Call with: nice \opt{val} \opt{process}, reset the priority level with: renice \opt{new val} \opt{PID}}
 			\qItem{Process Monitering}{Top, ps aux, htop \ra good tool}
 		\end{questionAnswer}
 
@@ -103,7 +104,7 @@
 			\qItem{Send commands}{kill PID \ra kills the process}
 			\qItem{pgrep}{Use user or type to find the PID of processes}
 			\qItem{pkill}{same as pgrep but it stops the matching PID}
-			\qItem{kill}{Send a signal to a process with kill -s "val" (default is 15) \ra see man(7) signals for the signals}
+			\qItem{kill}{Send a signal to a process with: kill -s \opt{val} (default is 15) \ra see man(7) signals for the signals}
 		\end{questionAnswer}
 	\end{questions}
 
@@ -117,7 +118,7 @@
 
 \begin{questions}{Pipes \& Redirection}
 	\begin{questionAnswer}
-		\qItem{Pipes}{Sends the output of one file into the input of another \ra cat \blank | grep "\blank"}
+		\qItem{Pipes}{Sends the output of one file into the input of another \ra cat \opt{filename} | grep \opt{string}}
 		\qItem{Redirect}{Use $>$ to overwrite a file, $>>$ to append. Use 1$>>$ for STDOUT \& 2$>>$ for STDERR}
 	\end{questionAnswer}
 \end{questions}
@@ -140,25 +141,55 @@
 \end{questions}
 
 \begin{questions}{Backups}
-	\begin{questionAnswer}
-		\qItem{}{}
-	\end{questionAnswer}
+	\rsrc{Backup Tools} \url{http://www.admin-magazine.com/Articles/Using-rsync-for-Backups}\\
+	\rsrc{Rsync Snapshots} \url{http://www.mikerubel.org/computers/rsync_snapshots/}\\
+	\begin{itemize}
+		\item rsync \ra Remote/Local, Local/Remote, \& Local/Local file copying. Sends only the differences between the source \& existing files in the destination
+			\begin{itemize}
+				\item Use: rsync \opt{options} \opt{source} \opt{destination}
+					\begin{itemize}
+						\item Source \ra Can be files \ra *.c, or everything in a directory \opt{path name}/, remove the trailing slash to copy the directory.
+						\item To specify a remote host \opt{computer name} use \ra \opt{computer name}:\opt{path} as the \opt{source} or \opt{destination}. No : means local only.
+					\end{itemize}
+				\item Options:
+					\begin{itemize}
+						\item -a \ra Archieve mode, saves symbolic links, devices, attributes, permissions, ownership, groups, and is recursive (i.e. -a == -rlptgoD).
+						\item -t \ra Transfer files, if file exists, remote-update protocol is used to update the file by sending only the differences
+						\item -z \ra Compress before sending
+						\item --delete \ra Delete files from the recieving side if not in backup (CAUTION: run --dry-run to see what will be removed first)
+						\item --progress \& -v tells you whats going on
+					\end{itemize}
+			\end{itemize}
+		\item Backup Types \ra All can be done using rsync
+			\begin{itemize}
+				\item Incrimental \ra Only record changes from last incrimental backup
+				\item Differential \ra Records changes since the last total backup
+				\item Replica \ra Just replicate the whole shebang
+			\end{itemize}
+		\item Rsync for incrimental backups
+			\begin{itemize}
+				\item Have a full backup \opt{Full Backup} \ra rsync to a fresh loc
+				\item Have \opt{Backup.0} which has all the incrimental changes
+				\item Make each backup look like a full backup using hard links (cp -al)
+			\end{itemize}
+	\end{itemize}
 \end{questions}
 
 \section{Strings \& Searching}
-	\subsection{Grep}
+	\begin{questions}{Grep}
 		\begin{enumerate}
 			\item Search for a character pattern in a string
-			\item grep \blank filename \ra returns the lines with the character pattern \blank in file filename
-			\item Follow directories "grep -r \blank ./*"
+			\item grep \opt{string} \opt{filename} \ra returns the lines with the character pattern \opt{string} in file filename
+			\item Follow directories: grep -r \opt{string} \opt{directory}/*
 			\item Get the line number \ra -n
 			\item Get files with the string \ra -l
 			\item Ignore case \ra -i
 		\end{enumerate}
+	\end{questions}
 
 	\begin{questions}{Strings}
 		\begin{questionAnswer}
-			\qItem{cut -d : -f "field1"-"field2"}{Break a line on a delim ':', then take the fields in range, c of chars, b bytes}
+			\qItem{cut -d \opt{delim} -f \opt{field1}-\opt{field2}}{Break a line on a delim, then take the fields in range, c of chars, b bytes}
 		\end{questionAnswer}
 	\end{questions}
 
@@ -168,8 +199,8 @@
 			\qItem{Types}{7 types block special, char spectial, directory, normal file, symbolic link, named pipe, socket}
 			\qItem{diff}{Get difference between 2 files or dirs}
 			\qItem{comm}{select or reject common lines between files}
-			\qItem{ln}{Create a symbolic link}
-			\qItem{link}{Create a hard link}
+			\qItem{ln}{Create a symbolic link \ra sym links dont have to exist unlike hardlinks}
+			\qItem{link}{Create a hard link \ra file must exist, links and binds the same disk space, if original file is removed, the disk space is still bound to the hard link}
 			\qItem{Find the file's character set}{file -i \ra gives the mime type, search for}
 		\end{questionAnswer}
 	\end{questions}
@@ -184,19 +215,20 @@
 		\end{questionAnswer}
 	\end{questions}
 
-	\subsection{Find}
+	\begin{questions}{Find}
 		\begin{enumerate}
-			\item Find a specific file by name find \{Starting directory\} -name "filename"
-			\item Finding by type \ra find \{Starting directory\} -type d/f...
-			\item Searching depth \ra find \blank -maxdepth "depth"
-			\item Running a command on all found files \ra find \blank \blank -exec "command" {} + (the + ends the command)
-			\item Files by last accessed time \ra -atime "days\_ago" or -amin "min\_ago".
+			\item Find a specific file by name find \{Starting directory\} -name \opt{filename}
+			\item Finding by type \ra find \opt{Starting directory} -type \opt{d/f...}
+			\item Searching depth \ra find \opt{conditions} -maxdepth \opt{depth}
+			\item Running a command on all found files \ra find \opt{conditons} -exec \opt{command} + (the + ends the command)
+			\item Files by last accessed time \ra -atime \opt{days\_ago or -amin min\_ago}
 			\begin{enumerate}
 				\item a \ra accessed, m \ra modified, c \ra changed
 				\item use -daystart to count from the start of the current day instead of right now
 				\item use + for greater than the time, - for less and none for exactly
 			\end{enumerate}
 		\end{enumerate}
+	\end{questions}
 
 \begin{questions}{Finding Stuff}
 	\begin{questionAnswer}
@@ -244,11 +276,22 @@
 
 	\begin{questions}{Mounting}
 		\begin{questionAnswer}
-			\qItem{Mounting}{mount /dev/\blank destination}
+			\qItem{Mounting}{mount /dev/\opt{device} destination}
 			\qItem{What disk are mounted}{mount}
 			\qItem{Connected disks}{lsblk prints out all of the connected devices nicely formatted}
 			\qItem{Mounting on boot}{edit /etc/fstab}
 		\end{questionAnswer}
+	\end{questions}
+
+\section{Security}
+	\begin{questions}{SSH hardening}
+		\begin{enumerate}
+			\item Disable SSH protocol 1
+			\item Reduce the grace time (time to login)
+			\item Use TCP wrappers (always good to check)
+			\item Increase key strength (maybe go to 2048-bit keys)
+			\item Check the defaults and disable a few options
+		\end{enumerate}
 	\end{questions}
 
 \input{networking}

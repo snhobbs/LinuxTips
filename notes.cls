@@ -29,7 +29,7 @@
 \definecolor{darkblue}{RGB}{0,0,150}
 \usepackage[linkbordercolor = darkblue, linkcolor=darkblue, urlcolor=darkblue, colorlinks=true]{hyperref}
 
-
+\newcommand{\opt}[1]{$<$#1$>$}
 \newcommand{\ra}{$\rightarrow$ {}}
 \newcommand{\rsrc}[1]{\hspace{44pt}\textbf{#1: }}
 \newcommand{\blank}{\_\_\_\_{} }
