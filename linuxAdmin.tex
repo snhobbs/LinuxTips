@@ -30,12 +30,15 @@
 \section{Users, Passwords \& Permissions}
 \begin{questions}{Users}
 	\begin{questionAnswer}
-		\qItem{Adding a user}{useradd (single) \ra newusers (batch mode useradd)}
+		\qItem{Root}{UID : 0, GUID : 0 (root)}
+		\qItem{Root Permissions}{RW permissions for all files, but execute privilages can be removed}
+		\qItem{pseudo-users}{Have a group w/ special privilages, use su \opt{Group} to login as that group, w/ root this sets the group to the group defined}
+		\qItem{Adding a user}{useradd \opt{uname} (single) \ra newusers \opt{batch file} (batch mode useradd). With no args a user is created with the system defaults, usually with a home dir etc.}
 		\qItem{Lock an Account}{usermod -l \opt{user}}
 		\qItem{New password}{passwd \opt{username}}
 		\qItem{Default file permissions}{Set UMASK in /etc/login.defs (debians). Takes away the permissions}
 		\qItem{Change Owner \& Group}{chown}
-		\qItem{Hashed passwords storage}{/etc/shadow}
+		\qItem{Password \& login info}{/etc/passwd \ra the hashed password itself is held in /etc/shadow}
 		\qItem{Change Permissions}{chmod Bit mask OGA rwx}
 		\qItem{Delete User}{userdel, removing recusively home folder and files \ra userdel -r}
 	\end{questionAnswer}
@@ -55,7 +58,7 @@
 \begin{questions}{Sudo}
 	\begin{enumerate}
 		\item Add a user as a sudoer by using visudo. You can specify users or groups.
-		\item Common to have a sudo or wheel group and to give that group permissions in visudo
+		\item Common to have a sudo or wheel group and to give that group root permissions in visudo
 		\item Syntax \ra \opt{user} computerAddress=(\opt{Runas\_Alias}) \opt{Command\_Alias}
 		\item You can use a Runas\_Alias to define a semi-super user that owns a group of files or processes. Then the user can use sudo to run as that user. Same you can limit the commands that a user can run as sudo  with the Command\_Alias
 		\item to give sudo root access use: \opt{user} ALL=(ALL) ALL \ra root privilages to \opt{user} with use of sudo
@@ -69,39 +72,34 @@
 			\qItem{proc}{In /proc \ra State of running processes in a virtual file system}
 			\qItem{Process types}{user \ra started w/out special permissions, daemon \ra exist in background, kernel \ra execute only in 'kernel space'}
 			\qItem{Forked}{process being started by a parent process}
-			\qItem{Nice}{Priority level [-20 (most) - 19 (least)] \ra 0 is default. Call with: nice \opt{val} \opt{process}, reset the priority level with: renice \opt{new val} \opt{PID}}
+			\qItem{Nice}{Priority level [-20 (Highest) \ra 19 (Lowest)] \ra 0 is default. Call with: nice \opt{val} \opt{process}, reset the priority level with: renice \opt{new val} \opt{PID}}
 			\qItem{Process Monitering}{Top, ps aux, htop \ra good tool}
 		\end{questionAnswer}
 
-			\subsubsection{Process states}
-				\rsrc{RHEL Doc} \url{https://access.redhat.com/sites/default/files/attachments/processstates_20120831.pdf}
-				\begin{enumerate}
-					\item Runnable
-						\begin{enumerate}
-							\item Born or forked
-							\item Ready to run or runnable
-						\end{enumerate}
-					\item Running
-						\begin{enumerate}
-							\item Running in user space or running in kernel space
-						\end{enumerate}
-					\item Sleeping
-						\begin{enumerate}
-							\item Blocked, Waiting, Sleeping, in an Interruptable sleep, or in an Uninterruptable sleep
-							\item The process is sleeping, but it is present in main memory
-							\item The process is sleeping, but it is present in secondary memory storage (swap space on disk)
-						\end{enumerate}
-					\item Zombie
-						\begin{enumerate}
-							\item Terminated or stopped (gone immediately)
-							\item \textbf{zombie} state if terminated and parent process has not released it yet
-						\end{enumerate}
-				\end{enumerate}
+		\subsubsection{Process states}
+			\rsrc{RHEL Doc} \url{https://access.redhat.com/sites/default/files/attachments/processstates_20120831.pdf}
+
+			\begin{questionAnswer}
+				\qItem{\textbf{R} \ra Runnable/Running}{
+					\begin{enumerate}
+						\item Born or forked
+						\item Ready to run or runnable
+						\item Running in user space or running in kernel space
+					\end{enumerate}}
+				\qItem{\textbf{S} \ra Sleeping/Waiting}{
+					\begin{enumerate}
+						\item Present in main memory
+						\item Present in secondary memory storage (swap space on disk)
+					\end{enumerate}}
+				\qItem{\textbf{D} \ra Blocked/Uninterruptable sleep}{Very fast, unobserved, just high priority}
+				\qItem{\textbf{T} \ra Temporarily Stopped}{Temporarily stopped but can be restarted}
+				\qItem{\textbf{Z} \ra Zombie}{Terminated but parent process has not released it yet}
+			\end{questionAnswer}
 	\end{questions}
 
 	\begin{questions}{Process Signals}
 		\begin{questionAnswer}
-			\qItem{Send commands}{kill PID \ra kills the process}
+			\qItem{Send commands}{See kill}
 			\qItem{pgrep}{Use user or type to find the PID of processes}
 			\qItem{pkill}{same as pgrep but it stops the matching PID}
 			\qItem{kill}{Send a signal to a process with: kill -s \opt{val} (default is 15) \ra see man(7) signals for the signals}
@@ -113,12 +111,14 @@
 	\begin{questionAnswer}
 		\qItem{Set a shell variable from a program output}{\$(arg)}
 		\qItem{getconf}{List system config variables}
+		\qItem{export}{}
+		\qItem{Caret}{\^x}
 	\end{questionAnswer}
 \end{questions}
 
 \begin{questions}{Pipes \& Redirection}
 	\begin{questionAnswer}
-		\qItem{Pipes}{Sends the output of one file into the input of another \ra cat \opt{filename} | grep \opt{string}}
+		\qItem{Pipes}{Sends the output of one file into the input of another \ra cat \opt{filename} \textbar~ grep \opt{string}}
 		\qItem{Redirect}{Use $>$ to overwrite a file, $>>$ to append. Use 1$>>$ for STDOUT \& 2$>>$ for STDERR}
 	\end{questionAnswer}
 \end{questions}
@@ -141,8 +141,10 @@
 \end{questions}
 
 \begin{questions}{Backups}
-	\rsrc{Backup Tools} \url{http://www.admin-magazine.com/Articles/Using-rsync-for-Backups}\\
-	\rsrc{Rsync Snapshots} \url{http://www.mikerubel.org/computers/rsync_snapshots/}\\
+	\rsrc{Backup Tools} \url{http://www.admin-magazine.com/Articles/Using-rsync-for-Backups}
+
+	\rsrc{Rsync Snapshots} \url{http://www.mikerubel.org/computers/rsync_snapshots/}
+
 	\begin{itemize}
 		\item rsync \ra Remote/Local, Local/Remote, \& Local/Local file copying. Sends only the differences between the source \& existing files in the destination
 			\begin{itemize}
@@ -177,19 +179,21 @@
 
 \section{Strings \& Searching}
 	\begin{questions}{Grep}
-		\begin{enumerate}
-			\item Search for a character pattern in a string
-			\item grep \opt{string} \opt{filename} \ra returns the lines with the character pattern \opt{string} in file filename
-			\item Follow directories: grep -r \opt{string} \opt{directory}/*
-			\item Get the line number \ra -n
-			\item Get files with the string \ra -l
-			\item Ignore case \ra -i
-		\end{enumerate}
+		\begin{questionAnswer}
+			\qItem{Description}{Search for a character pattern in a string}
+			\qItem{Use}{grep \opt{string} \opt{filename} \ra returns the lines with the character pattern \opt{string} in file filename}
+			\qItem{\opt{option} -r}{Follow directories}
+			\qItem{\opt{option} -n}{Get the line number}
+			\qItem{\opt{option} -l}{Get files with the string}
+			\qItem{\opt{option} -i}{Ignore case}
+		\end{questionAnswer}
 	\end{questions}
 
 	\begin{questions}{Strings}
 		\begin{questionAnswer}
 			\qItem{cut -d \opt{delim} -f \opt{field1}-\opt{field2}}{Break a line on a delim, then take the fields in range, c of chars, b bytes}
+			\qItem{sed}{\FIXME{research needed}}
+			\qItem{awk}{\FIXME{research needed}}
 		\end{questionAnswer}
 	\end{questions}
 
@@ -283,16 +287,13 @@
 		\end{questionAnswer}
 	\end{questions}
 
-\section{Security}
-	\begin{questions}{SSH hardening}
-		\begin{enumerate}
-			\item Disable SSH protocol 1
-			\item Reduce the grace time (time to login)
-			\item Use TCP wrappers (always good to check)
-			\item Increase key strength (maybe go to 2048-bit keys)
-			\item Check the defaults and disable a few options
-		\end{enumerate}
-	\end{questions}
+RAID explanation
+SWAP
+What would you do to recover a lost the root password to a Unix/Linux system?
+Write a locking function in bash
+What is a pre-emptive kernel, what does that mean to you?
+What is the name and location of the system log on a Unix or Linux system?
+What would you do to recover a lost the root password to a Unix/Linux system?
 
 \input{networking}
 \input{programming}

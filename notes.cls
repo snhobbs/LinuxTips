@@ -1,6 +1,6 @@
 \ProvidesClass{notes}
 
-\LoadClass[11pt, noindent, letter]{memoir}
+\LoadClass[11pt, noindent]{memoir}
 \usepackage[left=.75in, right=.75in, top=1in, bottom=1in]{geometry}
 \setlength\parindent{0pt}
 \setlength\textwidth{7in}
@@ -22,8 +22,8 @@
 \chapterstyle{AlexanderGrebenkov}
 \chapterstyle{ell}
 
-
-
+\usepackage{longtable}
+\settocdepth{subsection}
 
 \usepackage{xcolor}%
 \definecolor{darkblue}{RGB}{0,0,150}
@@ -33,6 +33,7 @@
 \newcommand{\ra}{$\rightarrow$ {}}
 \newcommand{\rsrc}[1]{\hspace{44pt}\textbf{#1: }}
 \newcommand{\blank}{\_\_\_\_{} }
+\newcommand{\FIXME}[1]{\textbf{\{FIXME: #1}\}}
 \newcounter{questionSec}
 \newcounter{questionCount}[questionSec]
 \newcommand{\qItem}[2]{\stepcounter{questionCount} \textbf{\thequestionCount} & #1 & #2\\\hline}
@@ -42,11 +43,11 @@
 	%\vspace{2pt}\hrule\vspace{12pt}
 
 	\newenvironment{questionAnswer}{
-		\begin{tabular}{|r| p{.35\textwidth}|p{.55\textwidth}|}
+		\begin{longtable}{|r| p{.35\textwidth}|p{.55\textwidth}|}
 		\hline\hline
 		&&\\
 		\stepcounter{questionSec}
-	}{\hline\end{tabular}\vspace{11pt}}
+	}{\hline\end{longtable}\vspace{11pt}}
 }{}
 
 \renewcommand\baselinestretch{1.2}

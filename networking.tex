@@ -7,24 +7,164 @@
 			\item Networking for System Administrators
 			\item The Practice of System and Network Administration
 		\end{enumerate}
-	\textbf{Sites}
-		\begin{enumerate}
-			\item
-		\end{enumerate}
 	\textbf{Links}
 		\begin{enumerate}
 			\item \textbf{Network Questions: } \url{https://github.com/kylejohnson/linux-sysadmin-interview-questions/blob/master/test.md}
 		\end{enumerate}
 
+\section{Connections}
+\begin{questions}{Sockets}
+	\begin{questionAnswer}
+		\qItem{Def}{A unix file type with duplex communication}
+		\qItem{Use}{Communicating between processes}
+		\qItem{List Sockets}{TCP/UDP \ra Socklist, all \ra netstat \& ss}
+		\qItem{Listening TCP Sockets}{netstat -tl}
+	\end{questionAnswer}
 
-	\begin{questions}{Sockets}
+	\begin{itemize}
+		\item Attributes: Domain, Type, Protocol
+			\begin{itemize}
+				\item Domain \ra Address family (UNIX \ra AF\_UNIX, TCP/IP \ra AF\_INET, etc)
+				\item Type \ra Communication characteristics
+					\begin{itemize}
+						\item Stream Sockets (SOCK\_STREAM) \ra Sequenced \& reliable 2 way byte stream. Large messages fragmented, transmitted, \& reassembled. Order of packets is guarenteed
+						\item Datagram Sockets (SOCK\_DGRAM) \ra Doesn't establish \& maintain a connection. Unsequenced \& unreliable.
+					\end{itemize}
+				\item Protocol \ra UNIX and TCP/IP sockets dont require protocols \ra use 0 for the default
+			\end{itemize}
+		\item Communication Protocols
+			\begin{enumerate}
+				\item UDP \ra AF\_INET domain with SOCK\_DGRAM connection type
+				\item TCP/IP \ra AF\_INET domain with SOCK\_STREAM connection type
+				\item Others exist, but are less common
+			\end{enumerate}
+	\end{itemize}
+\end{questions}
+
+\begin{questions}{TCP/IP}
+The application determines which communication protocol is more appro-
+priate. On the Web, you normally do not want data to go missing during
+transmission (a piece of text, image, or downloaded software might get lost,
+with annoying to catastrophic results), hence TCP is the correct choice. For television or voice chat, it is usually preferrable to live with small breaks in the service (a pixellated picture or a brief burst of static) than for everything to grind to a halt while the system arranges for a missing datagram to be
+
+	\begin{questionAnswer}
+		\qItem{IP Packet}{A data packet sent by the TCP or UDP protocol. Contains header info and data. 20 header bytes and variable number of data bytes}
+		\qItem{Local host}{Means \textit{this computer}, connects to the loopback address \ra 127.0.0.1 - 127.255.255.254 (IPv4) \& ::1 (IPv6)}
+		\qItem{ARP}{Address resolution protocol. Maps an address (like IPv4 address) to a device (like a MAC address). Same for IPv6 this is done by NDP (see below)}
+		\qItem{NDP}{Neighbor Discovery Protocol, removes necessity of DHCP for configuring hosts, although DHCPv6 does exist}
+		\qItem{MAC Address}{Media access control address. Unique identifier assigned to network interfaces for communications at the data link layer of a network segment. Also known as Ethernet hardware address (EHA), hardware address or physical address. MAC addresses are supposedly unique world wide. Find current mac w/ arp}
+		\qItem{Find an IP or site name}{dig \opt{site name}/\opt{ip address}}
+		\qItem{Find site info from DNS}{whois \opt{site name}}
+		\qItem{DHCP/DHCPv6}{Dynamic Host Configuration Protocol. Standard network protocol for IP. Dynamically distributes network configuration parameters, such as IP addresses, for interfaces and services}
+		\qItem{Default Gateway}{Path to reach all none local connections. Computer \ra Def Gateway (usually a router) \ra ... \ra destinations router \ra destination. Use rout to find gw address}
+		\qItem{NAT}{Network address translation. Rerouting IP addresses so that there is only 1 internet routable IP for an entire private network. Used synonomously w/ IP masquarading. Used due to IPv4 exhaustion.}
+		\qItem{IPoAC}{IP over Avian Carriers. IP packets carried by pigeon. Mike Tyson IT.}
+		\qItem{Subnet mask}{Defines locally reachable connections. etc  192.168.178.0/24 means the first 24 bits are masked away and only the last 8 bits are locally reachable. So 192.168.178.0 to 192.168.178.255 can be reached locally}
+		\qItem{ISO OSI reference model}{Open Systems Interconnection model. 7 layers each of which only see 1 up and 1 down.}
+	\end{questionAnswer}
+\end{questions}
+
+\begin{questions}{Internet}
+	\begin{questionAnswer}
+		\qItem{HTTP/HTTPS}{Hyper text transfer protocol / secure. Request - response protocl for server-client computing. }
+		\qItem{SMTP}{Secure messeging transfer protocol}
+		\qItem{DNS}{Domain name service, look up IP addresses from human readable names. Use whois or dig as a cmd line tool.}
+	\end{questionAnswer}
+\end{questions}
+
+
+\begin{questions}{Tools}
+	\begin{questionAnswer}
+		\qItem{ifconfig}{Network configuration \& querying the setup of a network interface}
+		\qItem{ip}{}
+		\qItem{whois}{}
+		\qItem{arp}{}
+		\qItem{route}{}
+		\qItem{traceroute}{}
+		\qItem{Ping}{Uses the control protocol, ICMP, see if communication is possible. Use ping6 to test IPv6 connections}
+	\end{questionAnswer}
+\end{questions}
+
+\section{Remote Connections}
+	\begin{questions}{SSH}
 		\begin{questionAnswer}
-			\qItem{Socket}{}
-			\qItem{List Sockets}{socklist}
-			\qItem{Socket}{}
-			\qItem{Socket}{}
+			\qItem{Encryption}{All communiucations are encryted \ra handshake determines the encryption protocol and proime number, they then share the public keys and keep a secret key}
+			\qItem{Keys}{Secret \& public key. Put public key on sever, server sends message to client, client uses secret key to send a return message which confirms the connection.}
+			\qItem{Generating keys}{ssh-keygen -t dsa}
+			\qItem{X forwarding}{-X (unencrypted), -Y (encrypted)}
+			\qItem{File transfer}{SFTP/SCP are the ssh tunnel file transfers, sftp being the upgraded version of scp.}
+			\qItem{SSH Hardening}{
+				\begin{enumerate}
+					\item Disable SSH protocol 1
+					\item Reduce the grace time (time to login)
+					\item Use TCP wrappers (always good to check)
+					\item Increase key strength (maybe go to 2048-bit keys)
+					\item Check the defaults and disable a few options
+				\end{enumerate}}
 		\end{questionAnswer}
 	\end{questions}
 
-Cider?
-rfcs?
+	\begin{questions}{TLS/SSL}
+		\begin{questionAnswer}
+			\qItem{TLS}{Transport Layer Security}
+			\qItem{SSL}{Secure Sockets Layer}
+			\qItem{Encryption}{By key pairing}
+			\qItem{Digital certificates}{relies on a set of trusted third-party certificate authorities to establish the authenticity of certificates. Ensures that the public key holder is who they claim to be (perventing man in the middle attacks)}
+			\qItem{File transfer}{FTPS \ra FTP SSL or HTTPS \ra HTTP SSL (or secure, etc)}
+		\end{questionAnswer}
+	\end{questions}
+
+	\begin{questions}{FTP \& Telnet}
+		\begin{questionAnswer}
+			\qItem{FTP}{File transfer protocol. Often used with SSL liscences for FTPS}
+			\qItem{Telnet}{Provides cmd line access to a remote host like ssh. Security concerns has made ssh the prefered communication method}
+		\end{questionAnswer}
+	\end{questions}
+
+	\begin{questions}{Mail Servers}
+		\begin{questionAnswer}
+			\qItem{SMTP}{}
+			\qItem{SMTP relay}{}
+			\qItem{MX record}{}
+			\qItem{SMTP sending a message}{}
+			\qItem{SMTP}{}
+		\end{questionAnswer}
+	\end{questions}
+
+	\begin{questions}{OSI}
+	Using the OSI model, which layer has the responsibility of making sure that the packet gets where it is supposed to go?
+		\begin{questionAnswer}
+			\qItem{}{}
+		\end{questionAnswer}
+	\end{questions}
+
+
+	\begin{questions}{Unknowns}
+		Which IP ranges/subnets are "private" or "non-routable" (RFC 1918)?
+		What is a packet filter and how does it work?
+		What is a proxy and how does it work?
+		Explain asynchronous routing?
+		A TCP connection on a network can be uniquely defined by 4 things. What are those things?
+		When a client running a web browser connects to a web server, what is the source port of the connection?
+		What is the destination port of the connection?
+		What is an A record?
+		What is an NS record?
+		What is a PTR record?
+		What is a DNS forwarder?
+		What is meant by "Reverse Lookup"?
+		What is LDAP and what is it used for?
+		What is a DN in LDAP?
+		What is IDS?
+		What is IPS?
+		What is the difference between IDS and IPS?
+		What is meant by the term "DOS Attack"?
+		How does a switch get a mac address?
+		What type of packet to discover a router?
+		How does traceroute work?
+
+
+
+		\begin{questionAnswer}
+			\qItem{}{}
+		\end{questionAnswer}
+	\end{questions}
