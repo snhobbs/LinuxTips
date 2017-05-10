@@ -1,11 +1,12 @@
+\newcommand{\uls}{Unix \& Linux System Administration Handbook, $4^{th}$}
 \chapter{Networking}
 \section{Resources}
 	\textbf{Books}
 		\begin{enumerate}
-			\item Beginning Linux Programming (3rd)
+			\item Beginning Linux Programming (3rd) (See the section on sockets)
 			\item Unix Network Programming
 			\item Networking for System Administrators
-			\item The Practice of System and Network Administration
+			\item \uls
 		\end{enumerate}
 	\textbf{Links}
 		\begin{enumerate}
@@ -60,8 +61,20 @@ with annoying to catastrophic results), hence TCP is the correct choice. For tel
 		\qItem{NAT}{Network address translation. Rerouting IP addresses so that there is only 1 internet routable IP for an entire private network. Used synonomously w/ IP masquarading. Used due to IPv4 exhaustion.}
 		\qItem{IPoAC}{IP over Avian Carriers. IP packets carried by pigeon. Mike Tyson IT.}
 		\qItem{Subnet mask}{Defines locally reachable connections. etc  192.168.178.0/24 means the first 24 bits are masked away and only the last 8 bits are locally reachable. So 192.168.178.0 to 192.168.178.255 can be reached locally}
-		\qItem{ISO OSI reference model}{Open Systems Interconnection model. 7 layers each of which only see 1 up and 1 down.}
+		\qItem{CIDR}{Classless Inter-Domain Routing. Page 456 \uls. AKA supernetting\FIXME{EXPAND}}
 	\end{questionAnswer}
+
+	IPs (ranges/subnets) reserved for private use/"non-routable" (RFC 1918)?
+	\begin{tabular}{llll}
+		\textbf{IP Class} &\textbf{From} &\textbf{To} &\textbf{CIDR}\\\hline
+		Class A& 10.0.0.0& 10.255.255.255& 10.0.0.0/8//
+		Class B& 172.16.0.0& 172.31.255.255& 172.16.0.0/12//
+		Class C& 192.168.0.0& 192.168.255.255& 192.168.0.0/16//\hline
+	\end{tabular}
+How does a switch get a mac address?
+		What type of packet to discover a router?
+				A TCP connection on a network can be uniquely defined by 4 things. What are those things?
+
 \end{questions}
 
 \begin{questions}{Internet}
@@ -82,6 +95,14 @@ with annoying to catastrophic results), hence TCP is the correct choice. For tel
 		\qItem{route}{}
 		\qItem{traceroute}{}
 		\qItem{Ping}{Uses the control protocol, ICMP, see if communication is possible. Use ping6 to test IPv6 connections}
+		\qItem{LDAP}{Lightweight directory access protocol. A lightweight database for storing various bits of info. Common attributes:\begin{itemize}
+			\item \textbf{dn} \ra distinguised name: Search path ex. dn: uid=simon,ou=people,dc=navy,dc=mil
+			\item \textbf{o} \ra organization: Often the top level entry
+			\item \textbf{ou} \ra organization unit: logical subdivision
+			\item \textbf{cn} \ra common name: most natural name to repr entry
+			\item \textbf{dc} \ra domain component: used when the model is based on DNS
+			\item \textbf{objectClass} \ra Object class: Schema used for this entry
+		\end{itemize}}
 	\end{questionAnswer}
 \end{questions}
 
@@ -127,44 +148,33 @@ with annoying to catastrophic results), hence TCP is the correct choice. For tel
 			\qItem{SMTP relay}{}
 			\qItem{MX record}{}
 			\qItem{SMTP sending a message}{}
-			\qItem{SMTP}{}
 		\end{questionAnswer}
 	\end{questions}
 
 	\begin{questions}{OSI}
 	Using the OSI model, which layer has the responsibility of making sure that the packet gets where it is supposed to go?
 		\begin{questionAnswer}
-			\qItem{}{}
+			\qItem{ISO OSI reference model}{Open Systems Interconnection model. 7 layers each of which only see 1 up and 1 down.}
 		\end{questionAnswer}
 	\end{questions}
 
 
+	\begin{questions}{Terms}
+		\qItem{Packet filter/firewall}{}
+		\qItem{Proxy}{}
+		\qItem{'A' record}{}
+		\qItem{'NS' record}{}
+		\qItem{'PTR' record}{}
+		\qItem{DNS forwarder}{}
+		\qItem{IDS}{}
+		\qItem{Reverse Lookup}{}
+		\qItem{IPS}{}
+		\qItem{asynchronous routing}{}
+	\end{questions}
+
 	\begin{questions}{Unknowns}
-		Which IP ranges/subnets are "private" or "non-routable" (RFC 1918)?
-		What is a packet filter and how does it work?
-		What is a proxy and how does it work?
-		Explain asynchronous routing?
-		A TCP connection on a network can be uniquely defined by 4 things. What are those things?
 		When a client running a web browser connects to a web server, what is the source port of the connection?
 		What is the destination port of the connection?
-		What is an A record?
-		What is an NS record?
-		What is a PTR record?
-		What is a DNS forwarder?
-		What is meant by "Reverse Lookup"?
-		What is LDAP and what is it used for?
-		What is a DN in LDAP?
-		What is IDS?
-		What is IPS?
 		What is the difference between IDS and IPS?
 		What is meant by the term "DOS Attack"?
-		How does a switch get a mac address?
-		What type of packet to discover a router?
-		How does traceroute work?
-
-
-
-		\begin{questionAnswer}
-			\qItem{}{}
-		\end{questionAnswer}
 	\end{questions}

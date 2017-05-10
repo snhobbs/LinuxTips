@@ -111,15 +111,16 @@
 	\begin{questionAnswer}
 		\qItem{Set a shell variable from a program output}{\$(arg)}
 		\qItem{getconf}{List system config variables}
-		\qItem{export}{}
-		\qItem{Caret}{\^x}
+		\qItem{export}{Allows a shell variable to be accessed by called processes}
+		\qItem{\&\&}{call a command only if the proceeding one exited successfully. \opt{command 1} \&\& \opt{command 2}}
+		\qItem{\textbar\textbar}{call a command only if the proceeding one failed. \opt{command 1} \textbar\textbar \opt{command 2}}
 	\end{questionAnswer}
 \end{questions}
 
 \begin{questions}{Pipes \& Redirection}
 	\begin{questionAnswer}
 		\qItem{Pipes}{Sends the output of one file into the input of another \ra cat \opt{filename} \textbar~ grep \opt{string}}
-		\qItem{Redirect}{Use $>$ to overwrite a file, $>>$ to append. Use 1$>>$ for STDOUT \& 2$>>$ for STDERR}
+		\qItem{Redirect}{Use $>$ to overwrite a file, $>>$ to append. Use 1$>>$ for STDOUT \& 2$>>$ for STDERR, use $>$\& to redirect both.\opt{command} $<$ \opt{file} send the file contents to the command}
 	\end{questionAnswer}
 \end{questions}
 
@@ -287,8 +288,24 @@
 		\end{questionAnswer}
 	\end{questions}
 
-RAID explanation
-SWAP
+	\begin{questions}{RAID}
+		\begin{questionAnswer}
+			\qItem{Name}{Redundant array of inexpensive/independant disks}
+			\qItem{Description}{Combines mutiple storage devices onto one virtualized disk. Used to improve performance and/or reliability}
+			\qItem{Performance}{Improves performance by striping data across disks, allowing simultanious read/write operations of multiple disks.}
+			\qItem{Reliability}{Mirrors data on multiple disks to deal w/ disk failure.}
+			\qItem{Levels}{RAID has has levels 0,1,0+1,1+0,2,3,4,5,\&6}
+			\qItem{RAID 0}{Performance \ra stripes data across multiple disks to speed up R/W}
+			\qItem{RAID 1}{Reliability \ra aka Mirroring, duplicates data to multiple disks}
+			\qItem{RAID 0+1}{ Reliability w/ Performance \ra Mirrors of striped data}
+			\qItem{RAID 1+0}{ Performance w/ Reliability \ra Stripped mirrors of data}
+			\qItem{RAID 5}{Performance w/ some relibility \ra N-1 disks store data can lose 1 disk}
+			\qItem{RAID 6}{Performance w/ Reliability \ra Like RAID 5 but with N-2 disks. Can lose upto 2 disks}
+			\qItem{Others}{RAID 2-4 are rarely used.}
+			\qItem{JBOD}{Just a bunch of disks (aka linear RAID), combines several disks into a single logical one.}
+		\end{questionAnswer}
+	\end{questions}
+
 What would you do to recover a lost the root password to a Unix/Linux system?
 Write a locking function in bash
 What is a pre-emptive kernel, what does that mean to you?
