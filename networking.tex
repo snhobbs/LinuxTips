@@ -15,6 +15,12 @@
 
 \section{Connections}
 \begin{questions}{Sockets}
+		\FIXME{answer these}
+
+		When a client running a web browser connects to a web server, what is the source port of the connection?
+
+		What is the destination port of the connection?
+
 	\begin{questionAnswer}
 		\qItem{Def}{A unix file type with duplex communication}
 		\qItem{Use}{Communicating between processes}
@@ -62,18 +68,22 @@ with annoying to catastrophic results), hence TCP is the correct choice. For tel
 		\qItem{IPoAC}{IP over Avian Carriers. IP packets carried by pigeon. Mike Tyson IT.}
 		\qItem{Subnet mask}{Defines locally reachable connections. etc  192.168.178.0/24 means the first 24 bits are masked away and only the last 8 bits are locally reachable. So 192.168.178.0 to 192.168.178.255 can be reached locally}
 		\qItem{CIDR}{Classless Inter-Domain Routing. Page 456 \uls. AKA supernetting\FIXME{EXPAND}}
+		\qItem{Packet filter/firewall}{}
 	\end{questionAnswer}
 
 	IPs (ranges/subnets) reserved for private use/"non-routable" (RFC 1918)?
 	\begin{tabular}{llll}
 		\textbf{IP Class} &\textbf{From} &\textbf{To} &\textbf{CIDR}\\\hline
-		Class A& 10.0.0.0& 10.255.255.255& 10.0.0.0/8//
-		Class B& 172.16.0.0& 172.31.255.255& 172.16.0.0/12//
-		Class C& 192.168.0.0& 192.168.255.255& 192.168.0.0/16//\hline
+		Class A& 10.0.0.0& 10.255.255.255& 10.0.0.0/8\\
+		Class B& 172.16.0.0& 172.31.255.255& 172.16.0.0/12\\
+		Class C& 192.168.0.0& 192.168.255.255& 192.168.0.0/16\\ \hline
 	\end{tabular}
+
 How does a switch get a mac address?
-		What type of packet to discover a router?
-				A TCP connection on a network can be uniquely defined by 4 things. What are those things?
+
+What type of packet to discover a router?
+
+A TCP connection on a network can be uniquely defined by 4 things. What are those things?
 
 \end{questions}
 
@@ -89,11 +99,11 @@ How does a switch get a mac address?
 \begin{questions}{Tools}
 	\begin{questionAnswer}
 		\qItem{ifconfig}{Network configuration \& querying the setup of a network interface}
-		\qItem{ip}{}
-		\qItem{whois}{}
-		\qItem{arp}{}
-		\qItem{route}{}
-		\qItem{traceroute}{}
+		\qItem{ip}{newer version of ifconfig, use ip addr show to list all connections}
+		\qItem{whois}{Look up info in DNS about site}
+		\qItem{arp}{Look at the computers hooked up in the subnet and the hardware addresses known}
+		\qItem{route}{show / manipulate the IP routing table}
+		\qItem{traceroute}{print the route packets trace to network host}
 		\qItem{Ping}{Uses the control protocol, ICMP, see if communication is possible. Use ping6 to test IPv6 connections}
 		\qItem{LDAP}{Lightweight directory access protocol. A lightweight database for storing various bits of info. Common attributes:\begin{itemize}
 			\item \textbf{dn} \ra distinguised name: Search path ex. dn: uid=simon,ou=people,dc=navy,dc=mil
@@ -144,10 +154,10 @@ How does a switch get a mac address?
 
 	\begin{questions}{Mail Servers}
 		\begin{questionAnswer}
-			\qItem{SMTP}{}
-			\qItem{SMTP relay}{}
-			\qItem{MX record}{}
-			\qItem{SMTP sending a message}{}
+			\qItem{SMTP}{Secure mail transfer protocol}
+			\qItem{SMTP relay}{\FIXME{}}
+			\qItem{MX record}{Mail exchange message}
+			\qItem{SMTP sending a message}{\FIXME{}}
 		\end{questionAnswer}
 	\end{questions}
 
@@ -158,23 +168,23 @@ How does a switch get a mac address?
 		\end{questionAnswer}
 	\end{questions}
 
-
-	\begin{questions}{Terms}
-		\qItem{Packet filter/firewall}{}
-		\qItem{Proxy}{}
-		\qItem{'A' record}{}
-		\qItem{'NS' record}{}
-		\qItem{'PTR' record}{}
-		\qItem{DNS forwarder}{}
-		\qItem{IDS}{}
-		\qItem{Reverse Lookup}{}
-		\qItem{IPS}{}
-		\qItem{asynchronous routing}{}
+	\begin{questions}{DNS}
+		\rsrc{DNS Record Types} \url{https://en.wikipedia.org/wiki/List_of_DNS_record_types}
+		\begin{questionAnswer}
+			\qItem{'A' record}{Address record \ra Returns a 32-bit IPv4 address, most commonly used to map hostnames to an IP address of the host, but it is also used for DNSBLs, storing subnet masks in RFC 1101, etc.}
+			\qItem{CNAME record}{Canonical name record \ra Alias of one name to another: the DNS lookup will continue by retrying the lookup with the new name.}
+			\qItem{'NS' record}{Name server record \ra Delegates a DNS zone to use the given authoritative name servers}
+			\qItem{'PTR' record}{Pointer record \ra Pointer to a canonical name. Unlike a CNAME, DNS processing stops and just the name is returned. The most common use is for implementing reverse DNS lookups, but other uses include such things as DNS-SD.}
+			\qItem{DNS forwarder}{specific DNS requests are forwarded to a designated DNS server for resolution}
+			\qItem{Reverse Lookup}{Double check an IP address by looking up the DN based on the IP}
+		\end{questionAnswer}
 	\end{questions}
 
-	\begin{questions}{Unknowns}
-		When a client running a web browser connects to a web server, what is the source port of the connection?
-		What is the destination port of the connection?
-		What is the difference between IDS and IPS?
-		What is meant by the term "DOS Attack"?
+	\begin{questions}{Terms}
+		\begin{questionAnswer}
+			\qItem{Proxy}{A server that acts as an intermediary for requests from clients seeking resources from other servers.}
+			\qItem{IDS}{\FIXME{}}
+			\qItem{IPS}{Internet Provider Security \ra aka registrar tag, used by domain registrar to administer a domain name registration service and related Domain Name System (DNS) services}
+			\qItem{DOS}{Denial of service \ra overloading the bandwidth of a server to take it offline}
+		\end{questionAnswer}
 	\end{questions}

@@ -27,6 +27,8 @@
 			\item \url{https://github.com/chassing/linux-sysadmin-interview-questions#hard}
 		\end{enumerate}
 
+\newpage
+
 \section{Users, Passwords \& Permissions}
 \begin{questions}{Users}
 	\begin{questionAnswer}
@@ -43,6 +45,8 @@
 		\qItem{Delete User}{userdel, removing recusively home folder and files \ra userdel -r}
 	\end{questionAnswer}
 \end{questions}
+
+
 
 \begin{questions}{Groups}
 	\begin{questionAnswer}
@@ -138,6 +142,7 @@
 		\qItem{Schedule Jobs (system)}{/etc/crontab}
 		\qItem{at}{Run a process at a specified time, accepts HH:MM}
 		\qItem{batch}{Run a process when the load drops to a specified level}
+		\qItem{Job at boot}{Crontab w/ @reboot}
 	\end{questionAnswer}
 \end{questions}
 
@@ -193,8 +198,8 @@
 	\begin{questions}{Strings}
 		\begin{questionAnswer}
 			\qItem{cut -d \opt{delim} -f \opt{field1}-\opt{field2}}{Break a line on a delim, then take the fields in range, c of chars, b bytes}
-			\qItem{sed}{\FIXME{research needed}}
-			\qItem{awk}{\FIXME{research needed}}
+			\qItem{sed}{Stream editor, based on the original UNIX tex editor ed.}
+			\qItem{awk}{Pattern scanning and processing language}
 		\end{questionAnswer}
 	\end{questions}
 
@@ -234,6 +239,8 @@
 			\end{enumerate}
 		\end{enumerate}
 	\end{questions}
+
+\newpage
 
 \begin{questions}{Finding Stuff}
 	\begin{questionAnswer}
@@ -306,12 +313,11 @@
 		\end{questionAnswer}
 	\end{questions}
 
-What would you do to recover a lost the root password to a Unix/Linux system?
-Write a locking function in bash
-What is a pre-emptive kernel, what does that mean to you?
-What is the name and location of the system log on a Unix or Linux system?
-What would you do to recover a lost the root password to a Unix/Linux system?
-
+What would you do to recover a lost the root password to a Unix/Linux system?\\
+Write a locking function in bash\\
+What is a pre-emptive kernel, what does that mean to you?\\
+What is the name and location of the system log on a Unix or Linux system?\\
+find system inof \ra uname -a\\
 \input{networking}
 \input{programming}
 \end{document}

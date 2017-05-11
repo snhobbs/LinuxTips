@@ -44,8 +44,7 @@
 
 	\newenvironment{questionAnswer}{
 		\begin{longtable}{|r| p{.35\textwidth}|p{.55\textwidth}|}
-		\hline\hline
-		&&\\
+		\hline\hline\hspace{4pt}
 		\stepcounter{questionSec}
 	}{\hline\end{longtable}\vspace{11pt}}
 }{}
