@@ -209,8 +209,8 @@
 			\qItem{Types}{7 types block special, char spectial, directory, normal file, symbolic link, named pipe, socket}
 			\qItem{diff}{Get difference between 2 files or dirs}
 			\qItem{comm}{select or reject common lines between files}
-			\qItem{ln}{Create a symbolic link \ra sym links dont have to exist unlike hardlinks}
-			\qItem{link}{Create a hard link \ra file must exist, links and binds the same disk space, if original file is removed, the disk space is still bound to the hard link}
+			\qItem{ln -s}{Create a symbolic link \ra sym links dont have to exist unlike hardlinks. Same as a shortcut.}
+			\qItem{link/ ln}{Create a hard link \ra file must exist, links and binds the same disk space, if original file is removed, the disk space is still bound to the hard link}
 			\qItem{Find the file's character set}{file -i \ra gives the mime type, search for}
 		\end{questionAnswer}
 	\end{questions}
@@ -227,7 +227,7 @@
 
 	\begin{questions}{Find}
 		\begin{enumerate}
-			\item Find a specific file by name find \{Starting directory\} -name \opt{filename}
+			\item Find a specific file by name find \opt{Starting directory} -name \opt{filename}
 			\item Finding by type \ra find \opt{Starting directory} -type \opt{d/f...}
 			\item Searching depth \ra find \opt{conditions} -maxdepth \opt{depth}
 			\item Running a command on all found files \ra find \opt{conditons} -exec \opt{command} + (the + ends the command)

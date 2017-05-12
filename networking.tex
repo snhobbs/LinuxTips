@@ -67,11 +67,11 @@ with annoying to catastrophic results), hence TCP is the correct choice. For tel
 		\qItem{NAT}{Network address translation. Rerouting IP addresses so that there is only 1 internet routable IP for an entire private network. Used synonomously w/ IP masquarading. Used due to IPv4 exhaustion.}
 		\qItem{IPoAC}{IP over Avian Carriers. IP packets carried by pigeon. Mike Tyson IT.}
 		\qItem{Subnet mask}{Defines locally reachable connections. etc  192.168.178.0/24 means the first 24 bits are masked away and only the last 8 bits are locally reachable. So 192.168.178.0 to 192.168.178.255 can be reached locally}
-		\qItem{CIDR}{Classless Inter-Domain Routing. Page 456 \uls. AKA supernetting\FIXME{EXPAND}}
-		\qItem{Packet filter/firewall}{}
+		\qItem{CIDR}{Classless Inter-Domain Routing, AKA supernetting \ra removes the necessity for IP classes by masking IP bits by necessity}
+		\qItem{Packet filter/firewall}{Filtering based on origin from various IPs}
 	\end{questionAnswer}
 
-	IPs (ranges/subnets) reserved for private use/"non-routable" (RFC 1918)?
+	IPs (ranges/subnets) reserved for private use/"non-routable" (RFC 1918)?\\
 	\begin{tabular}{llll}
 		\textbf{IP Class} &\textbf{From} &\textbf{To} &\textbf{CIDR}\\\hline
 		Class A& 10.0.0.0& 10.255.255.255& 10.0.0.0/8\\
@@ -90,7 +90,7 @@ A TCP connection on a network can be uniquely defined by 4 things. What are thos
 \begin{questions}{Internet}
 	\begin{questionAnswer}
 		\qItem{HTTP/HTTPS}{Hyper text transfer protocol / secure. Request - response protocl for server-client computing. }
-		\qItem{SMTP}{Secure messeging transfer protocol}
+		\qItem{SMTP}{Secure messaging transfer protocol}
 		\qItem{DNS}{Domain name service, look up IP addresses from human readable names. Use whois or dig as a cmd line tool.}
 	\end{questionAnswer}
 \end{questions}
@@ -155,7 +155,6 @@ A TCP connection on a network can be uniquely defined by 4 things. What are thos
 	\begin{questions}{Mail Servers}
 		\begin{questionAnswer}
 			\qItem{SMTP}{Secure mail transfer protocol}
-			\qItem{SMTP relay}{\FIXME{}}
 			\qItem{MX record}{Mail exchange message}
 			\qItem{SMTP sending a message}{\FIXME{}}
 		\end{questionAnswer}
@@ -183,7 +182,6 @@ A TCP connection on a network can be uniquely defined by 4 things. What are thos
 	\begin{questions}{Terms}
 		\begin{questionAnswer}
 			\qItem{Proxy}{A server that acts as an intermediary for requests from clients seeking resources from other servers.}
-			\qItem{IDS}{\FIXME{}}
 			\qItem{IPS}{Internet Provider Security \ra aka registrar tag, used by domain registrar to administer a domain name registration service and related Domain Name System (DNS) services}
 			\qItem{DOS}{Denial of service \ra overloading the bandwidth of a server to take it offline}
 		\end{questionAnswer}
