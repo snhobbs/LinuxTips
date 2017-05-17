@@ -156,15 +156,55 @@ A TCP connection on a network can be uniquely defined by 4 things. What are thos
 		\begin{questionAnswer}
 			\qItem{SMTP}{Secure mail transfer protocol}
 			\qItem{MX record}{Mail exchange message}
-			\qItem{SMTP sending a message}{\FIXME{}}
+			%\qItem{SMTP sending a message}{\FIXME{}}
 		\end{questionAnswer}
 	\end{questions}
 
 	\begin{questions}{OSI}
+	\FIXME{EXPAND, THIS IS IMPORTANT}, have an example of the different levels and tcp/ip equiv
 	Using the OSI model, which layer has the responsibility of making sure that the packet gets where it is supposed to go?
 		\begin{questionAnswer}
 			\qItem{ISO OSI reference model}{Open Systems Interconnection model. 7 layers each of which only see 1 up and 1 down.}
 		\end{questionAnswer}
+
+		\def\totalWidth{40}
+		\def\columnA{7}
+		\def\columnB{6}
+		\def\columnC{17}
+		\def\columnD{10}
+		\def\exampleColour{paleyellow}
+		\begin{center}
+			\begin{bytefield}[bitwidth=1.1em]{\totalWidth}
+				\bitbox{\totalWidth}{\large\textbf{OSI Model}}\\
+
+				\bytefieldsetup{bitheight=4\baselineskip}%
+				\bitbox{\columnA}{\textbf{OSI Layer}} & \bitbox{\columnB}{\textbf{Protocol Data\\Unit (PDU)}} & \bitbox{\columnC}{\textbf{Function}} & \bitbox{\columnD}{\textbf{TCP/IP Example}}\\
+
+				\begin{leftwordgroup}{Host\\Layers}
+					\bytefieldsetup{bitheight=5\baselineskip}%
+					\colorbitbox{lightgray}{\columnA}{7) Application} & \colorbitbox{lightblue}{\columnB}{Data} & \bitbox{\columnC}{High level APIs including resource sharing and remote file access} & \colorbitbox{\exampleColour}{\columnD}{SSH, FTP, ...}\\
+
+					\bytefieldsetup{bitheight=5\baselineskip}%
+					\colorbitbox{lightgray}{\columnA}{6) Presentation} & \colorbitbox{lightblue}{\columnB}{Data} & \bitbox{\columnC}{Translation of data between a networking service and an application; including character encoding, data compression and encryption/decryption} & \colorbitbox{\exampleColour}{\columnD}{Character conversion, data formatting}\\
+
+					\bytefieldsetup{bitheight=5\baselineskip}%
+					\colorbitbox{lightgray}{\columnA}{5) Session} & \colorbitbox{lightblue}{\columnB}{Data} & \bitbox{\columnC}{Managing communication sessions, i.e. continuous exchange of information in the form of multiple back-and-forth transmissions between two nodes} & \colorbitbox{\exampleColour}{\columnD}{Network Socket}\\
+
+					\bytefieldsetup{bitheight=5\baselineskip}%
+					\colorbitbox{lightgray}{\columnA}{4) Transport} & \colorbitbox{lightblue}{\columnB}{Segment (TCP)\\Datagram (UDP)} & \bitbox{\columnC}{Reliable transmission of data segments between points on a network, including segmentation, acknowledgement and multiplexing} & \colorbitbox{\exampleColour}{\columnD}{TCP or UDP}
+				\end{leftwordgroup}\\
+
+				\begin{leftwordgroup}{Media\\Layers}\\
+					\bytefieldsetup{bitheight=5\baselineskip}%
+					\colorbitbox{lightred}{\columnA}{3) Network} & \colorbitbox{a}{\columnB}{Packet} & \bitbox{\columnC}{ Structuring and managing a multi-node network, including addressing, routing and traffic control} & \colorbitbox{\exampleColour}{\columnD}{IPv4/v6} \\
+					\bytefieldsetup{bitheight=5\baselineskip}%
+					\colorbitbox{lightred}{\columnA}{2) Data Link} & \colorbitbox{b}{\columnB}{Frame} & \bitbox{\columnC}{Reliable transmission of data frames between two nodes connected by a physical layer} & \colorbitbox{\exampleColour}{\columnD}{Ethernet/wifi adapter} \\
+					\bytefieldsetup{bitheight=5\baselineskip}%
+					\colorbitbox{lightred}{\columnA}{1) Physical} & \colorbitbox{c}{\columnB}{Bit} & \bitbox{\columnC}{Transmission and reception of raw bit streams over a physical medium} & \colorbitbox{\exampleColour}{\columnD}{Fiber optic, Radio}
+				\end{leftwordgroup}
+			\end{bytefield}
+		\end{center}
+
 	\end{questions}
 
 	\begin{questions}{DNS}
@@ -176,6 +216,18 @@ A TCP connection on a network can be uniquely defined by 4 things. What are thos
 			\qItem{'PTR' record}{Pointer record \ra Pointer to a canonical name. Unlike a CNAME, DNS processing stops and just the name is returned. The most common use is for implementing reverse DNS lookups, but other uses include such things as DNS-SD.}
 			\qItem{DNS forwarder}{specific DNS requests are forwarded to a designated DNS server for resolution}
 			\qItem{Reverse Lookup}{Double check an IP address by looking up the DN based on the IP}
+		\end{questionAnswer}
+	\end{questions}
+
+	\begin{questions}{Switches}
+		\begin{questionAnswer}
+			\qItem{}{}
+		\end{questionAnswer}
+	\end{questions}
+
+	\begin{questions}{Routing}
+		\begin{questionAnswer}
+			\qItem{}{}
 		\end{questionAnswer}
 	\end{questions}
 

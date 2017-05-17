@@ -1,4 +1,8 @@
 \documentclass{notes}
+
+
+
+
 \begin{document}
 \tableofcontents
 \chapter{Linux}
@@ -212,6 +216,7 @@
 			\qItem{ln -s}{Create a symbolic link \ra sym links dont have to exist unlike hardlinks. Same as a shortcut.}
 			\qItem{link/ ln}{Create a hard link \ra file must exist, links and binds the same disk space, if original file is removed, the disk space is still bound to the hard link}
 			\qItem{Find the file's character set}{file -i \ra gives the mime type, search for}
+			\qItem{Inode}{\FIXME{}}
 		\end{questionAnswer}
 	\end{questions}
 
@@ -318,6 +323,15 @@ Write a locking function in bash\\
 What is a pre-emptive kernel, what does that mean to you?\\
 What is the name and location of the system log on a Unix or Linux system?\\
 find system inof \ra uname -a\\
+What is the system locale?\\
+Where do the login scripts live? Where would I go to find out how many times a user logged in and from where before their account got locked?\\
+Where are the DNS, Hostname and most other system wide configuration files? How can you edit them?\\
+How could I see if a file system is running out of space. Then: how can you see what is being written that is taking up the most space on that file system?\\
+Apache vs. NGINX\\
+Monitering processes\\
+Why should you never SSH into a production server as root, even if you will be immediately elevating to root?\\
+What's the difference between a named and an unnamed pipe? Is one superior to the other?\\
+
 \input{networking}
 \input{programming}
 \end{document}

@@ -27,6 +27,19 @@
 
 \usepackage{xcolor}%
 \definecolor{darkblue}{RGB}{0,0,150}
+\definecolor{lightgray}{RGB}{220,220,220}
+\definecolor{lightblue}{RGB}{70,150,250}
+\definecolor{lightred}{RGB}{250,180,150}
+\definecolor{paleyellow}{RGB}{255,255,101}
+\definecolor{a}{RGB}{250,150,70}
+\definecolor{b}{RGB}{200,150,70}
+\definecolor{c}{RGB}{150,150,70}
+
+\usepackage{bytefield}
+\newcommand{\colorbitbox}[3]{%
+\rlap{\bitbox{#2}{\color{#1}\rule{\width}{\height}}}%
+\bitbox{#2}{#3}}
+
 \usepackage[linkbordercolor = darkblue, linkcolor=darkblue, urlcolor=darkblue, colorlinks=true]{hyperref}
 
 \newcommand{\opt}[1]{$<$#1$>$}
