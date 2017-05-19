@@ -12,9 +12,6 @@
 
 \section{Terms}
 \begin{questions}{Programming}
-	\begin{questionAnswer}
-		\qItem{Agile}{See below \ref{sect:agile}}
-	\end{questionAnswer}
 	\begin{enumerate}
 		\label{sect:agile}
 		\item \textbf{Agile: } Software development strategy. Values:
@@ -31,10 +28,57 @@
 	\end{enumerate}
 \end{questions}
 
-\section{C/C++}
+%\section{C/C++}
 
 \section{Python}
+	\begin{questions}{Standard Library Scripting}
+		\rsrc{Python Standard Library}\url{https://docs.python.org/3/library/index.html}
+		\begin{questionAnswer}
+			\qItem{OS Module}{Miscellaneous operating system interfaces. Some attributes are cross platform, some platform specific. OS.path contains all the file name manipulation tools.}
+			\qItem{Subprocess Module}{Meant to replace parts of the OS module. Run subprocesses, use pipes, etc.}
+			\qItem{Sys Module}{Use for passing simple arguments (use argparse for more complicated argument passing). Get system information and shell variable analogs for the python environment.}
+			\qItem{Argparse}{A more plush way of getting command line arguments. Auto-generates a help screen.}
+			\qItem{Shutil Module}{Contains file and directory functions}
+		\end{questionAnswer}
+	\end{questions}
+
+	\begin{questions}{Package Development}
+		\rsrc{Pydocs} \url{https://docs.python.org/2/tutorial/modules.html#packages}
+		\rsrc{PCU} \url{https://pythonconquerstheuniverse.wordpress.com/2009/10/15/python-packages/}
+		\begin{questionAnswer}
+			\qItem{Making a Package}{\begin{enumerate}
+					\item Contains a set of modules and atleast one \_\_init\_\_.py
+					\item Append the location of the module to PYTHONPATH, the working directory is checked last \ra sys.path.append(\opt{Package Location})
+					\item The \_\_init\_\_.py module is run at the start, so to have all submodules nicely loaded use from add import add to be able to call \opt{Package Name}.add instead of \opt{Package Name}.add.add
+				\end{enumerate}}
+		\end{questionAnswer}
+	\end{questions}
+
+	\begin{questions}{Environment}
+		\begin{questionAnswer}
+			\qItem{Virtualenv}{Isolated working copy of Python allowing the altering of a python setup without affecting other projects}
+			\qItem{Use}{Packages installed here will not affect the global Python installation.}
+			\qItem{New virtualenv}{In a clean directory run: virtualenv \opt{Dir Name}, add --no-site-packages to not use already installed packages}
+			\qItem{Add packages}{Call pip from the correct env directory. This will install the package in the virtual environment directory instead of the main installation}
+			\qItem{Activate}{From \opt{Dir Name} use: source activate.}
+			\qItem{Deactivate}{Call: deactivate}
+		\end{questionAnswer}
+	\end{questions}
 
 \section{MySQL}
+	\begin{questions}{Relational Database}
+		\rsrc{Wiki}\url{https://en.wikipedia.org/wiki/Relational_database}
+		\begin{questionAnswer}
+			\qItem{SQL}{Structured Query Language}
+			\qItem{Relational Model}{Table rows have unique keys. This allows for columns of 1 table to be linked to columns in another on some shared attribute}
+			\qItem{Databases}{\begin{enumerate}
+				\item MySQL
+				\item Mariadb
+				\item sqllite
+				\item Postgres
+				\item couchdb
+			\end{enumerate}}
+		\end{questionAnswer}
+	\end{questions}
 
 \textbf{Start mysql server: } rcmysql start

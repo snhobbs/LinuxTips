@@ -48,6 +48,23 @@
 	\end{itemize}
 \end{questions}
 
+\begin{questions}{Common Sockets}
+	\begin{questionAnswer}
+		\qItem{Wake-On-Lan}{Port 9 \ra Unofficial}
+		\qItem{FTP}{Data transfer: Port 20 Official, Control: Port 21 Official}
+		\qItem{SSH}{Port 22 Official}
+		\qItem{Telnet}{Port 23 Official}
+		\qItem{SMTP}{Port 25 Official}
+		\qItem{WHOIS}{Port 43 Official}
+		\qItem{DNS}{Port 53 Official}
+		\qItem{HTTP}{Port 80 Official}
+		\qItem{SFTP}{Port 115 Official}
+		\qItem{HTTPS}{Port 443 Official}
+		\qItem{Syslog}{Port 514 Official}
+		\qItem{Traceroute}{Port 33434 Official}
+	\end{questionAnswer}
+\end{questions}
+
 \begin{questions}{TCP/IP}
 The application determines which communication protocol is more appro-
 priate. On the Web, you normally do not want data to go missing during
@@ -117,6 +134,14 @@ A TCP connection on a network can be uniquely defined by 4 things. What are thos
 \end{questions}
 
 \section{Remote Connections}
+	\begin{questions}{HTTP Servers}
+		\begin{questionAnswer}
+			\qItem{Purpose}{HTTP daemons, can handle multiple websites, requests, manages load on a server etc.}
+			\qItem{Apache}{Apache License, most popular and flexible}
+			\qItem{Nginix}{BSD License, 4x requests per second and less memory than apache but is less flexible.}
+			\qItem{Varnish}{FreeBSD License, heavily multithreaded making it good for content heavy dynamic webpages}
+		\end{questionAnswer}
+	\end{questions}
 	\begin{questions}{SSH}
 		\begin{questionAnswer}
 			\qItem{Encryption}{All communiucations are encryted \ra handshake determines the encryption protocol and proime number, they then share the public keys and keep a secret key}
@@ -161,17 +186,13 @@ A TCP connection on a network can be uniquely defined by 4 things. What are thos
 	\end{questions}
 
 	\begin{questions}{OSI}
-	\FIXME{EXPAND, THIS IS IMPORTANT}, have an example of the different levels and tcp/ip equiv
-	Using the OSI model, which layer has the responsibility of making sure that the packet gets where it is supposed to go?
-		\begin{questionAnswer}
-			\qItem{ISO OSI reference model}{Open Systems Interconnection model. 7 layers each of which only see 1 up and 1 down.}
-		\end{questionAnswer}
+		ISO OSI reference model \ra Open Systems Interconnection model. 7 layers each of which only see 1 up and 1 down. So the network doesn't care if its copper or fiber, the application doesnt care if its IPv4 or Appletalk, each layer is supposed to be independant of the others.
 
-		\def\totalWidth{40}
+		\def\totalWidth{37}
 		\def\columnA{7}
 		\def\columnB{6}
 		\def\columnC{17}
-		\def\columnD{10}
+		\def\columnD{7}
 		\def\exampleColour{paleyellow}
 		\begin{center}
 			\begin{bytefield}[bitwidth=1.1em]{\totalWidth}
@@ -185,7 +206,7 @@ A TCP connection on a network can be uniquely defined by 4 things. What are thos
 					\colorbitbox{lightgray}{\columnA}{7) Application} & \colorbitbox{lightblue}{\columnB}{Data} & \bitbox{\columnC}{High level APIs including resource sharing and remote file access} & \colorbitbox{\exampleColour}{\columnD}{SSH, FTP, ...}\\
 
 					\bytefieldsetup{bitheight=5\baselineskip}%
-					\colorbitbox{lightgray}{\columnA}{6) Presentation} & \colorbitbox{lightblue}{\columnB}{Data} & \bitbox{\columnC}{Translation of data between a networking service and an application; including character encoding, data compression and encryption/decryption} & \colorbitbox{\exampleColour}{\columnD}{Character conversion, data formatting}\\
+					\colorbitbox{lightgray}{\columnA}{6) Presentation} & \colorbitbox{lightblue}{\columnB}{Data} & \bitbox{\columnC}{Translation of data between a networking service and an application; including character encoding, data compression and encryption/decryption} & \colorbitbox{\exampleColour}{\columnD}{Character conversion, data formatting, MIME}\\
 
 					\bytefieldsetup{bitheight=5\baselineskip}%
 					\colorbitbox{lightgray}{\columnA}{5) Session} & \colorbitbox{lightblue}{\columnB}{Data} & \bitbox{\columnC}{Managing communication sessions, i.e. continuous exchange of information in the form of multiple back-and-forth transmissions between two nodes} & \colorbitbox{\exampleColour}{\columnD}{Network Socket}\\
@@ -194,7 +215,7 @@ A TCP connection on a network can be uniquely defined by 4 things. What are thos
 					\colorbitbox{lightgray}{\columnA}{4) Transport} & \colorbitbox{lightblue}{\columnB}{Segment (TCP)\\Datagram (UDP)} & \bitbox{\columnC}{Reliable transmission of data segments between points on a network, including segmentation, acknowledgement and multiplexing} & \colorbitbox{\exampleColour}{\columnD}{TCP or UDP}
 				\end{leftwordgroup}\\
 
-				\begin{leftwordgroup}{Media\\Layers}\\
+				\begin{leftwordgroup}{Media\\Layers}
 					\bytefieldsetup{bitheight=5\baselineskip}%
 					\colorbitbox{lightred}{\columnA}{3) Network} & \colorbitbox{a}{\columnB}{Packet} & \bitbox{\columnC}{ Structuring and managing a multi-node network, including addressing, routing and traffic control} & \colorbitbox{\exampleColour}{\columnD}{IPv4/v6} \\
 					\bytefieldsetup{bitheight=5\baselineskip}%
@@ -204,7 +225,6 @@ A TCP connection on a network can be uniquely defined by 4 things. What are thos
 				\end{leftwordgroup}
 			\end{bytefield}
 		\end{center}
-
 	\end{questions}
 
 	\begin{questions}{DNS}
@@ -221,13 +241,22 @@ A TCP connection on a network can be uniquely defined by 4 things. What are thos
 
 	\begin{questions}{Switches}
 		\begin{questionAnswer}
-			\qItem{}{}
+			\qItem{Use}{Connects a network to a series of connections using packet switching, only sends data to the target computer.}
+			\qItem{OSI Layer}{Layer 2/3 \ra used hardware addresses (MAC) to switch packages. Some include network capability using IP addresses}
+			\qItem{Hubs}{A hub sends out all packages that come in to all attached connections. A switch selectively sends packets to the correct hardware address.}
 		\end{questionAnswer}
 	\end{questions}
 
 	\begin{questions}{Routing}
 		\begin{questionAnswer}
-			\qItem{}{}
+			\qItem{OSI Layer}{Network layer 3}
+			\qItem{Schemes}{\begin{itemize}
+				\item Unicast \ra Sent to single node
+				\item Broadcast \ra Sent to all nodes
+				\item Multicast \ra Sent to a group of nodes
+				\item Anycast \ra Sent to anyone of a group of nodes
+				\item Geocast \ra Sent to a geographic area
+			\end{itemize}}
 		\end{questionAnswer}
 	\end{questions}
 
@@ -237,4 +266,8 @@ A TCP connection on a network can be uniquely defined by 4 things. What are thos
 			\qItem{IPS}{Internet Provider Security \ra aka registrar tag, used by domain registrar to administer a domain name registration service and related Domain Name System (DNS) services}
 			\qItem{DOS}{Denial of service \ra overloading the bandwidth of a server to take it offline}
 		\end{questionAnswer}
+	\end{questions}
+
+	\begin{questions}{Servers}
+		\rsrc{Virtualized Servers}\url{http://www.infoworld.com/article/2609482/data-center/data-center-review-puppet-vs-chef-vs-ansible-vs-salt.html}
 	\end{questions}

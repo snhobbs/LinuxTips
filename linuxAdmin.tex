@@ -1,8 +1,4 @@
 \documentclass{notes}
-
-
-
-
 \begin{document}
 \tableofcontents
 \chapter{Linux}
@@ -32,6 +28,14 @@
 		\end{enumerate}
 
 \newpage
+
+\section{Linux Facts}
+	\begin{questions}{Mascots}
+		\begin{questionAnswer}
+			\qItem{Linux Mascot}{Tux the penguin}
+			\qItem{BSD Mascot}{Beastie the Daemon}
+		\end{questionAnswer}
+	\end{questions}
 
 \section{Users, Passwords \& Permissions}
 \begin{questions}{Users}
@@ -107,17 +111,16 @@
 
 	\begin{questions}{Process Signals}
 		\begin{questionAnswer}
-			\qItem{Send commands}{See kill}
+			\qItem{kill}{Send a signal to a process with: kill -s \opt{val} (default is 15) \ra see man(7) signals for the signals. Defaults to -9}
 			\qItem{pgrep}{Use user or type to find the PID of processes}
 			\qItem{pkill}{same as pgrep but it stops the matching PID}
-			\qItem{kill}{Send a signal to a process with: kill -s \opt{val} (default is 15) \ra see man(7) signals for the signals}
 		\end{questionAnswer}
 	\end{questions}
 
 \section{Bash Scripting}
 \begin{questions}{Shell Variables}
 	\begin{questionAnswer}
-		\qItem{Set a shell variable from a program output}{\$(arg)}
+		\qItem{Set a shell variable from a program output}{\$(arg) or `\opt{arg}`}
 		\qItem{getconf}{List system config variables}
 		\qItem{export}{Allows a shell variable to be accessed by called processes}
 		\qItem{\&\&}{call a command only if the proceeding one exited successfully. \opt{command 1} \&\& \opt{command 2}}
@@ -168,8 +171,8 @@
 						\item -a \ra Archieve mode, saves symbolic links, devices, attributes, permissions, ownership, groups, and is recursive (i.e. -a == -rlptgoD).
 						\item -t \ra Transfer files, if file exists, remote-update protocol is used to update the file by sending only the differences
 						\item -z \ra Compress before sending
-						\item --delete \ra Delete files from the recieving side if not in backup (CAUTION: run --dry-run to see what will be removed first)
-						\item --progress \& -v tells you whats going on
+						\item $--$delete \ra Delete files from the recieving side if not in backup (CAUTION: run $--$dry-run to see what will be removed first)
+						\item $--$progress \& -v tells you whats going on
 					\end{itemize}
 			\end{itemize}
 		\item Backup Types \ra All can be done using rsync
@@ -204,19 +207,30 @@
 			\qItem{cut -d \opt{delim} -f \opt{field1}-\opt{field2}}{Break a line on a delim, then take the fields in range, c of chars, b bytes}
 			\qItem{sed}{Stream editor, based on the original UNIX tex editor ed.}
 			\qItem{awk}{Pattern scanning and processing language}
+			\qItem{python}{For normal people use python w/ the re package.}
 		\end{questionAnswer}
 	\end{questions}
 
 \section{Files}
 	\begin{questions}{Files}
 		\begin{questionAnswer}
-			\qItem{Types}{7 types block special, char spectial, directory, normal file, symbolic link, named pipe, socket}
+			\qItem{Types}{7 types block special, char special, directory, normal file, symbolic link, named pipe, socket}
 			\qItem{diff}{Get difference between 2 files or dirs}
 			\qItem{comm}{select or reject common lines between files}
 			\qItem{ln -s}{Create a symbolic link \ra sym links dont have to exist unlike hardlinks. Same as a shortcut.}
-			\qItem{link/ ln}{Create a hard link \ra file must exist, links and binds the same disk space, if original file is removed, the disk space is still bound to the hard link}
-			\qItem{Find the file's character set}{file -i \ra gives the mime type, search for}
-			\qItem{Inode}{\FIXME{}}
+			\qItem{link/ ln}{Create a hard link \ra file must exist, links and binds the same disk space, if original file is removed, the disk space is still bound to the hard link. Hard links share the same inode.}
+			\qItem{Find the file's character set}{file -i \ra gives the mime type, search for binary, ascii etc.}
+			\qItem{Inode}{Metadata (information about other data) for files in the file system held in a flat array. Holds ownership, access modes, and file type. Contents:
+			\begin{itemize}
+				\item Size in bytes
+				\item Device ID
+				\item User \& Group ID
+				\item File Mode (i.e. access)
+				\item User Flags
+				\item Timestamps \ra file modified, inode modified, and last accessed
+				\item Link count
+				\item Pointers to disk blocks
+			\end{itemize}}
 		\end{questionAnswer}
 	\end{questions}
 
@@ -235,7 +249,7 @@
 			\item Find a specific file by name find \opt{Starting directory} -name \opt{filename}
 			\item Finding by type \ra find \opt{Starting directory} -type \opt{d/f...}
 			\item Searching depth \ra find \opt{conditions} -maxdepth \opt{depth}
-			\item Running a command on all found files \ra find \opt{conditons} -exec \opt{command} + (the + ends the command)
+			\item Running a command on all found files \ra find \opt{conditons} -exec \opt{command} + (the + ends the command, so does \\;)
 			\item Files by last accessed time \ra -atime \opt{days\_ago or -amin min\_ago}
 			\begin{enumerate}
 				\item a \ra accessed, m \ra modified, c \ra changed
