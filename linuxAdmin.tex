@@ -1,6 +1,8 @@
 \documentclass{notes}
 \begin{document}
+
 \tableofcontents
+\label{sec:front}
 \chapter{Linux}
 \section{Resources}
 	\textbf{Books}
@@ -249,7 +251,7 @@
 			\item Find a specific file by name find \opt{Starting directory} -name \opt{filename}
 			\item Finding by type \ra find \opt{Starting directory} -type \opt{d/f...}
 			\item Searching depth \ra find \opt{conditions} -maxdepth \opt{depth}
-			\item Running a command on all found files \ra find \opt{conditons} -exec \opt{command} + (the + ends the command, so does \\;)
+			\item Running a command on all found files \ra find \opt{conditons} -exec \opt{command} + (the + ends the command, so does $\backslash$; )
 			\item Files by last accessed time \ra -atime \opt{days\_ago or -amin min\_ago}
 			\begin{enumerate}
 				\item a \ra accessed, m \ra modified, c \ra changed

@@ -25,6 +25,13 @@
 \usepackage{longtable}
 \settocdepth{subsection}
 
+% ****************************************
+%\makepagestyle{pageEscape}
+\copypagestyle{heading}{pageEscape}
+%\makeevenfoot{pageEscape}{}{}{}
+%\makeoddfoot{pageEscape}{}{}{}
+
+
 \usepackage{xcolor}%
 \definecolor{darkblue}{RGB}{0,0,150}
 \definecolor{lightgray}{RGB}{220,220,220}
