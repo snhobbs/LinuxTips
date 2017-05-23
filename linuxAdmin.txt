@@ -1,7 +1,0 @@
-1) uname -a -> system info
-2) getting ip -> ifconfig or ip addr show
-3) disk analysis -> df -ah (disk free)
-4) getting info on a service, starting & starting -> service ____ start/stop/status/reload
-5) Checking for open sockets -> netstat
-6) mount -> mount /dev/___ ____ , which ones are connected -> mount , mounting on boot edit /etc/fstab
-

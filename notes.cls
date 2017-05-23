@@ -1,6 +1,6 @@
 \ProvidesClass{notes}
 
-\LoadClass[11pt, noindent]{memoir}
+\LoadClass[11pt, noindent, oneside]{memoir}
 \usepackage[left=.75in, right=.75in, top=1in, bottom=1in]{geometry}
 \setlength\parindent{0pt}
 \setlength\textwidth{7in}
@@ -19,7 +19,7 @@
 \renewcommand{\afterchaptertitle}{\par\nobreak\medskip\hrule\vskip
 \afterchapskip}
 }
-\chapterstyle{AlexanderGrebenkov}
+%\chapterstyle{AlexanderGrebenkov}
 \chapterstyle{ell}
 
 \usepackage{longtable}

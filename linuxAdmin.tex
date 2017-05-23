@@ -71,7 +71,7 @@
 
 \begin{questions}{Sudo}
 	\begin{enumerate}
-		\item Add a user as a sudoer by using visudo. You can specify users or groups.
+		\item Add a user as a sudoer by using visudo. You can specify users or groups. Groups have a \% infront to seperate them from users
 		\item Common to have a sudo or wheel group and to give that group root permissions in visudo
 		\item Syntax \ra \opt{user} computerAddress=(\opt{Runas\_Alias}) \opt{Command\_Alias}
 		\item You can use a Runas\_Alias to define a semi-super user that owns a group of files or processes. Then the user can use sudo to run as that user. Same you can limit the commands that a user can run as sudo  with the Command\_Alias
@@ -210,6 +210,8 @@
 			\qItem{sed}{Stream editor, based on the original UNIX tex editor ed.}
 			\qItem{awk}{Pattern scanning and processing language}
 			\qItem{python}{For normal people use python w/ the re package.}
+			\qItem{tr}{Translate, use for replacing certain strings with something else. I mean really just use python, but theoretically use this}
+			\qItem{tee}{Put standard in to a file and to standard out, useful for logging the output while filtering}
 		\end{questionAnswer}
 	\end{questions}
 
@@ -261,7 +263,7 @@
 		\end{enumerate}
 	\end{questions}
 
-\newpage
+%\newpage
 
 \begin{questions}{Finding Stuff}
 	\begin{questionAnswer}

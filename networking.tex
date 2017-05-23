@@ -157,6 +157,7 @@ A TCP connection on a network can be uniquely defined by 4 things. What are thos
 					\item Increase key strength (maybe go to 2048-bit keys)
 					\item Check the defaults and disable a few options
 				\end{enumerate}}
+			\qItem{Server}{rcsshd. To start the ssh server run: rcsshd restart}
 		\end{questionAnswer}
 	\end{questions}
 
@@ -270,4 +271,50 @@ A TCP connection on a network can be uniquely defined by 4 things. What are thos
 
 	\begin{questions}{Servers}
 		\rsrc{Virtualized Servers}\url{http://www.infoworld.com/article/2609482/data-center/data-center-review-puppet-vs-chef-vs-ansible-vs-salt.html}
+	Jenkins/TeamCity/GoCI
+	Nagios/Zenoss/NewRelic
+	puppet/chef/ansible
+
+	\end{questions}
+
+	\begin{questions}{Network Configuration}
+	\begin{questionAnswer}
+		\qItem{LLDP}{Link Layer Discovery Protocol. Automatic network configuration mapping. Open source}
+		\qItem{CDP}{Cisco Discovery Protocol. Proprietary}
+		\qItem{SNMP}{Simple Network Mangement Protocol.}
+		\qItem{LCP}{Link Control Protocol, part of PPP (see below)}
+	\end{questionAnswer}
+	\end{questions}
+
+	\begin{questions}{Point to Point Protocol (PPP)}
+
+	\rsrc{Definition RFC}\url{https://tools.ietf.org/html/rfc1661}
+
+	\rsrc{PPP Over AAL5 (PPoA)}\url{https://tools.ietf.org/html/rfc2364}
+
+	\rsrc{PPP Over Ethernet (PPPoE)}\url{https://tools.ietf.org/html/rfc2516}
+
+	\begin{questionAnswer}
+		\qItem{Definition}{}
+		\qItem{Benifits}{}
+		\qItem{PPPoE}{PPP over ethernet. }
+		\qItem{PPPoA}{PPP over AAL5. }
+	\end{questionAnswer}
+	\end{questions}
+
+	\begin{questions}{VLAN}
+		\rsrc{VPN v. VLAN}\url{http://www.differencebetween.net/technology/difference-between-vlan-and-vpn/}
+
+		Subcategory of VPN, purely layer 2 construct making computers connected in various ways act like they are all connected on the same switch. Allows for breaking up networks that are on the same switch and combining ones that arent.
+
+		Summary:
+		1. VPN is a method of creating a smaller sub network on top of an existing bigger network while VLAN is a subcategory of VPN
+		2. A VLAN is used to group computers that are not usually within same geography into the same broadcast domain while VPN is most commonly related to remote access to a company’s network
+	\end{questions}
+
+	\begin{questions}{Ethernet}
+	\begin{questionAnswer}
+		\qItem{Connector}{RJ-45}
+		\qItem{Wire}{UTP \ra unshielded twisted pair (copper)}
+	\end{questionAnswer}
 	\end{questions}
