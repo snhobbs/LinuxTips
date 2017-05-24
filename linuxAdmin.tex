@@ -294,7 +294,9 @@
 			\qItem{boot}{Static files of the boot loader \ra unbootable w/out}
 			\qItem{dev}{Device files}
 			\qItem{etc}{Host-specific system configuration \ra must be static, cannot be a binary}
+			\qItem{home (optional)}{User home dirs}
 			\qItem{lib}{Essential shared libraries and kernel modules \ra }
+			\qItem{lib$<$qual$>$ (normally lib64 or lib32, optional)}{If multiple library versions are needed like 32 \& 64 bit}
 			\qItem{media}{Mount point for removeable media \ra use lsblk to get the names of these}
 			\qItem{mnt}{Mount point for mounting a filesystem temporarily}
 			\qItem{opt}{Add-on application software packages}
@@ -303,8 +305,8 @@
 			\qItem{tmp}{Temporary files}
 			\qItem{usr}{Secondary hierarchy}
 			\qItem{var}{Variable data}
-			\qItem{home (optional)}{User home dirs}
-			\qItem{lib$<$qual$>$ (normally lib64 or lib32, optional)}{If multiple library versions are needed like 32 \& 64 bit}
+
+
 			\qItem{root (optional)}{Home dir for root user}
 		\end{questionAnswer}
 	\end{questions}
