@@ -38,6 +38,7 @@
 \definecolor{lightblue}{RGB}{70,150,250}
 \definecolor{lightred}{RGB}{250,180,150}
 \definecolor{paleyellow}{RGB}{255,255,101}
+\definecolor{amber}{rgb}{1.0, 0.49, 0.0}
 \definecolor{a}{RGB}{250,150,70}
 \definecolor{b}{RGB}{200,150,70}
 \definecolor{c}{RGB}{150,150,70}

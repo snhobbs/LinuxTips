@@ -5,8 +5,8 @@
 			\qItem{Get a repo}{git clone}
 			\qItem{Make a repo}{git init}
 			\qItem{Pull an existing repo}{Use init or clone the repo then pull}
-			\qItem{Remote repos}{git remote \ra lists the remote repos, git remote add "name" "url"}
-			\qItem{Configuration}{git config \ra complicated, but add email and user with git config --global user.email \& user.name}
+			\qItem{Remote repos}{git remote \ra lists the remote repos, git remote add \opt{name} \opt{url}. \opt{name} is usually origin.}
+			\qItem{Configuration}{git config \ra complicated, but add email and user with git config $--$global user.email \& user.name}
 		\end{questionAnswer}
 	\end{questions}
 
@@ -58,7 +58,7 @@
 		\begin{questionAnswer}
 			\qItem{Virtualenv}{Isolated working copy of Python allowing the altering of a python setup without affecting other projects}
 			\qItem{Use}{Packages installed here will not affect the global Python installation.}
-			\qItem{New virtualenv}{In a clean directory run: virtualenv \opt{Dir Name}, add --no-site-packages to not use already installed packages}
+			\qItem{New virtualenv}{In a clean directory run: virtualenv \opt{Dir Name}, add $--$no-site-packages to not use already installed packages}
 			\qItem{Add packages}{Call pip from the correct env directory. This will install the package in the virtual environment directory instead of the main installation}
 			\qItem{Activate}{From \opt{Dir Name} use: source activate.}
 			\qItem{Deactivate}{Call: deactivate}
