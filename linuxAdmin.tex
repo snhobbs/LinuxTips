@@ -141,6 +141,9 @@
 	\begin{questionAnswer}
 		\qItem{curl}{Tool for talking over several different protocols}
 		\qItem{wget}{Downloads files from an address, same as curl but GNU}
+		\qItem{uname}{Get kernel \& system information. Use -a for all info.}
+		\qItem{df}{Disk free, find the used and available space on the mounted block devices.}
+		\qItem{du}{Disk usage, find the space being used by files, scans throught the entire directory passed.}
 	\end{questionAnswer}
 \end{questions}
 
@@ -338,20 +341,63 @@
 		\end{questionAnswer}
 	\end{questions}
 
+\section{Bootup \& Init}
+		\rsrc{yolinux}\href{http://www.yolinux.com/TUTORIALS/LinuxTutorialInitProcess.html}{Init Process}
+
+		\rsrc{tldp}\href{http://www.tldp.org/LDP/intro-linux/html/sect_04_02.html}{Boot, shutdown, init}
+	\begin{questions}{Bootup}
+		\begin{questionAnswer}
+			\qItem{BIOS}{Basic Input/Output System \ra on x86 on boot the computer looks for the bios at the end of the system memory where it is in permemant read-only memory. Looks for bootable media. From the hard disk the bios looks for the MBR.}
+			\qItem{MBR}{Master boot record \ra loads the the boot loader (depends on configuration)}
+			\qItem{Boot Loaders}{2 common types \ra LILO \& GRUB. Both support multiboot}
+			\qItem{Kernel Loading}{Kernel is loaded and has control passed to it}
+		\end{questionAnswer}
+	\end{questions}
+
+	\begin{questions}{Init}
+		\begin{itemize}
+			\item Run by the kernel once the kernel is loaded
+			\item Parent/ancestor of all automatic processes
+			\item The legacy init is sysvinit uses /etc/inittab, systemd is now common and uses . Others include upstart and Linux Standard Base (LSB) init scripts
+			\item The first processes that init starts is a script /etc/rc.d/rc.sysinit
+		\end{itemize}
+		\begin{questionAnswer}
+			\qItem{Location}{/sbin/init \ra for systemd this is a sym link to ../usr/lib/systemd/systemd}
+			\qItem{PID}{Always PID 1}
+			\qItem{Typical Run Levels}{
+				\begin{enumerate}\setcounter{enumi}{-1}%start from 0
+					\item Halt
+					\item Single-user text mode
+					\item Unused \ra user definable
+					\item Full multi-user text mode
+					\item Unused \ra user definable
+					\item Full multi-user graphical mode (with an X-based login screen)
+					\item Reboot
+				\end{enumerate}}
+			\qItem{Check runlevel}{use: runlevel}
+		\end{questionAnswer}
+	\end{questions}
+
+	\begin{questions}{Systemd}
+		\begin{itemize}
+			\item New default init system
+		\end{itemize}
+		\begin{questionAnswer}
+			\qItem{Boot Scripts}{/etc/systemd/system/ and /lib/systemd/system/}
+			\qItem{Service Control}{systemctl \ra Controls the systemd system and service manager}
+		\end{questionAnswer}
+	\end{questions}
+
+
 What would you do to recover a lost the root password to a Unix/Linux system?\\
-Write a locking function in bash\\
 What is a pre-emptive kernel, what does that mean to you?\\
 What is the name and location of the system log on a Unix or Linux system?\\
-find system inof \ra uname -a\\
 What is the system locale?\\
 Where do the login scripts live? Where would I go to find out how many times a user logged in and from where before their account got locked?\\
 Where are the DNS, Hostname and most other system wide configuration files? How can you edit them?\\
-How could I see if a file system is running out of space. Then: how can you see what is being written that is taking up the most space on that file system?\\
-Apache vs. NGINX\\
-Monitering processes\\
+How could I see if a file system is running out of space. Then: how can you see what is being written that is taking up the most space on that file system? \ra df for space du for usage\\
 Why should you never SSH into a production server as root, even if you will be immediately elevating to root?\\
-What's the difference between a named and an unnamed pipe? Is one superior to the other?\\
-
+\input{debian}
 \input{networking}
 \input{programming}
 \end{document}
