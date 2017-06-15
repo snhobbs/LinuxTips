@@ -65,6 +65,43 @@
 		\end{questionAnswer}
 	\end{questions}
 
+	\begin{questions}{Python Terms}
+		\begin{questionAnswer}
+			\qItem{Bind}{Assign/Set an attribute}
+			\qItem{Attribute}{State/variable of an object}
+			\qItem{Access}{Get a value from a variable}
+			\qItem{method}{Class function}
+			\qItem{Constructor/ initializer}{\_\_init\_\_ ('dunder init')}
+			\qItem{Destructor}{\_\_del\_\_, if this is a class method it must be explicitly called w/ the del operator for the object to be removed from memory. del decrements the reference count for the object by one. When the reference count is zero, the destructor is called}
+			\qItem{Decorator}{A wrapper function that takes a function as an argument, placed above the wrapping function w/ @\opt{decorator name}}
+			\qItem{Property}{Built in decorator to assign an immutable value returned by the wrapped method}
+		\end{questionAnswer}
+	\end{questions}
+
+	\begin{questions}{OOP Terms}
+		\begin{questionAnswer}
+			\qItem{Singleton}{Design Pattern that prevents multiple instantiation}
+			\qItem{Borg}{Multiple intances share state}
+			\qItem{First class objects}{Objects can be used in the same way other data types can, passed to functions assigned }
+			\qItem{Super/Base/Parent}{The class/es that a derived/child/sub/child class inherits from. All 3 are synonymous}
+			\qItem{derived/child/sub/child}{ The classes that inherit from a Super/Base/Parent class}
+			\qItem{Overriding}{A derived class redefines a method that exists in the base class, the derived class's method is then called instead}
+			\qItem{HAS-A}{}
+			\qItem{IS-A}{}
+		\end{questionAnswer}
+	\end{questions}
+
+	\begin{questions}{Python OOP}
+		Python is polymorphic, everything-is-an-object, multi-inheriting,
+	\end{questions}
+
+	\begin{questions}{Terms}
+		\begin{questionAnswer}
+			\qItem{Memoization}{Saving the result of a function call so as to skip recalculation on repeated calls}
+			\qItem{Polymorphic}{Single interface to different types.}
+		\end{questionAnswer}
+	\end{questions}
+
 \section{MySQL}
 	\begin{questions}{Relational Database}
 		\rsrc{Wiki}\url{https://en.wikipedia.org/wiki/Relational_database}
@@ -81,6 +118,6 @@
 		\end{questionAnswer}
 	\end{questions}
 
-\section{Postgres}
+%\section{Postgres}
 
 \textbf{Start mysql server: } rcmysql start

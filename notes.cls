@@ -22,6 +22,7 @@
 %\chapterstyle{AlexanderGrebenkov}
 \chapterstyle{ell}
 
+\usepackage{graphicx}
 \usepackage{longtable}
 \settocdepth{subsection}
 
@@ -58,6 +59,7 @@
 \newcounter{questionSec}
 \newcounter{questionCount}[questionSec]
 \newcommand{\qItem}[2]{\stepcounter{questionCount} \textbf{\thequestionCount} & #1 & #2\\\hline}
+\newcommand{\qes}[2]{\item \textbf{#1 : }#2}
 
 \newenvironment{questions}[1]{\subsection{#1}
 	%\centering{\large\textbf{#1}}\\
